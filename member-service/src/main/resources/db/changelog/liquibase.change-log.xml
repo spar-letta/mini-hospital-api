@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+        xmlns:ext="http://www.liquibase.org/xml/ns/dbchangelog-ext"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog-ext
+   http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-ext.xsd
+   http://www.liquibase.org/xml/ns/dbchangelog
+   http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-4.14.xsd">
+
+    <changeSet id="20240929 14:12" author="enock">
+        <sql>
+            CREATE SCHEMA IF NOT EXISTS hospital_v1;
+        </sql>
+    </changeSet>
+
+    <changeSet id="20240929 14:14" author="enock">
+        <preConditions onFail="MARK_RAN">
+            <not>
+                <tableExists tableName="patient" schemaName="hospital_v1"/>
+            </not>
+        </preConditions>
+        <createTable tableName="patient" schemaName="hospital_v1">
+            <column name="patient_id" type="bigint" autoIncrement="true">
+                <constraints primaryKey="true"/>
+            </column>
+            <column name="public_id" type="uuid"/>
+            <column name="date_created" type="timestamp"/>
+            <column name="date_modified" type="timestamp"/>
+            <column name="modified_by" type="varchar(250)"/>
+            <column name="created_by_id" type="BIGINT"/>
+            <column name="deleted" type="boolean" defaultValueBoolean="false"/>
+            <column name="national_id" type="bigint"/>
+            <column name="first_name" type="VARCHAR(255)"/>
+            <column name="last_name" type="VARCHAR(255)"/>
+            <column name="other_name" type="VARCHAR(255)"/>
+            <column name="gender" type="VARCHAR(255)"/>
+            <column name="email_address" type="VARCHAR(255)"/>
+            <column name="phone_number" type="VARCHAR(255)"/>
+            <column name="date_of_birth" type="date"/>
+            <column name="marital_status" type="VARCHAR(255)"/>
+        </createTable>
+        <addForeignKeyConstraint baseColumnNames="created_by_id" baseTableName="patient"
+                                 baseTableSchemaName="hospital_v1" constraintName="created_by_id_table_patient"
+                                 deferrable="false" initiallyDeferred="false" onDelete="NO ACTION" onUpdate="NO ACTION"
+                                 referencedColumnNames="id" referencedTableName="users"
+                                 referencedTableSchemaName="public"/>
+    </changeSet>
+
+    <changeSet id="20240929 14:19" author="enock">
+        <preConditions onFail="MARK_RAN">
+            <not>
+                <tableExists tableName="patient_address" schemaName="hospital_v1"/>
+            </not>
+        </preConditions>
+        <createTable tableName="patient_address" schemaName="hospital_v1">
+            <column name="id" type="bigint" autoIncrement="true">
+                <constraints primaryKey="true"/>
+            </column>
+            <column name="postal_code" type="VARCHAR(255)"/>
+            <column name="physical_address" type="VARCHAR(255)"/>
+            <column name="country" type="VARCHAR(255)"/>
+            <column name="address_patient_id" type="bigint"/>
+
+        </createTable>
+        <addForeignKeyConstraint baseColumnNames="address_patient_id" baseTableName="patient_address"
+                                 baseTableSchemaName="hospital_v1" constraintName="patient_id_table_patient"
+                                 deferrable="false" initiallyDeferred="false" onDelete="NO ACTION" onUpdate="NO ACTION"
+                                 referencedColumnNames="patient_id" referencedTableName="patient"
+                                 referencedTableSchemaName="hospital_v1"/>
+    </changeSet>
+
+</databaseChangeLog>

@@ -1,0 +1,51 @@
+server:
+  port: 8085
+
+spring:
+  application:
+    name: doctor-service
+
+  datasource:
+    url: jdbc:postgresql://localhost:5432/tenten
+    username: postgres
+    password: 19pool90
+
+  jpa:
+    database-platform: org.hibernate.dialect.PostgreSQLDialect
+    hibernate:
+      ddl-auto: none
+
+
+
+  cloud:
+    loadbalancer:
+      ribbon:
+        enabled: false
+
+  liquibase:
+    change-log: 'classpath:/db/changelog/liquibase.change-log.xml'
+
+  batch:
+    job:
+      enabled: false
+  #  hystrix:
+  #    command:
+  #      default:
+  #        execution:
+  #          timeout:
+  #            enabled: false
+  #          isolation:
+  #            thread:
+  #              timeoutInMilliseconds: 10000
+#spring.batch.jdbc.initialize-schema=always
+  eureka:
+    client:
+      register-with-eureka: true
+      fetch-registry: true
+
+  logging:
+    level:
+      root: INFO
+      com.example.demo_resource_server: DEBUG
+      org.springframework.jdbc: DEBUG
+      org.springframework.security: trace

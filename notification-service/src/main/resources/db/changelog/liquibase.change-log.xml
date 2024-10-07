@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+        xmlns:ext="http://www.liquibase.org/xml/ns/dbchangelog-ext"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog-ext
+   http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-ext.xsd
+   http://www.liquibase.org/xml/ns/dbchangelog
+   http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-4.14.xsd">
+
+    <changeSet id="202410022132" author="enock">
+        <sql>
+            CREATE SCHEMA IF NOT EXISTS hospital_v1;
+        </sql>
+    </changeSet>
+
+    <changeSet id="202410022133" author="enock">
+        <preConditions onFail="MARK_RAN">
+            <not>
+                <tableExists tableName="audit_form" schemaName="hospital_v1"/>
+            </not>
+        </preConditions>
+        <createTable tableName="audit_form" schemaName="hospital_v1">
+            <column name="id" type="bigint" autoIncrement="true">
+                <constraints primaryKey="true"/>
+            </column>
+            <column name="event_date" type="timestamp"/>
+            <column name="action" type="VARCHAR(255)"/>
+            <column name="description" type="VARCHAR(255)"/>
+            <column name="comment" type="VARCHAR(255)"/>
+            <column name="entity_id" type="UUID"/>
+            <column name="action_by" type="UUID"/>
+            <column name="entity_type" type="VARCHAR(255)"/>
+        </createTable>
+    </changeSet>
+</databaseChangeLog>

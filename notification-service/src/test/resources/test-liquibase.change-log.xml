@@ -1,0 +1,38 @@
+<databaseChangeLog
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+        xmlns:ext="http://www.liquibase.org/xml/ns/dbchangelog-ext"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog-ext
+   http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-ext.xsd
+   http://www.liquibase.org/xml/ns/dbchangelog
+   http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.4.xsd">
+
+    <changeSet author="enock" id="20240929 15:40">
+        <sql>
+            CREATE TYPE "JSONB" AS json;
+        </sql>
+    </changeSet>
+<!--    <include file="app-user-change-log.xml"/>-->
+    <include file="/db/changelog/liquibase.change-log.xml"/>
+
+<!--    <changeSet id="202409291542" author="enock">-->
+<!--        <createSequence sequenceName="hibernate_sequence"-->
+<!--                        cycle="false"-->
+<!--                        startValue="1"-->
+<!--                        incrementBy="1"-->
+<!--                        maxValue="9223372036854775807"-->
+<!--                        schemaName="public"-->
+<!--                        minValue="1"/>-->
+<!--    </changeSet>-->
+
+    <changeSet id="202409291544" author="enock">
+        <createSequence sequenceName="hibernate_sequence"
+                        cycle="false"
+                        startValue="1"
+                        incrementBy="1"
+                        maxValue="9223372036854775807"
+                        schemaName="hospital_v1"
+                        minValue="1"/>
+    </changeSet>
+
+</databaseChangeLog>

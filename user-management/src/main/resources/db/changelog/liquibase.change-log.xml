@@ -1,0 +1,124 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+        xmlns:ext="http://www.liquibase.org/xml/ns/dbchangelog-ext"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog-ext
+   http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-ext.xsd
+   http://www.liquibase.org/xml/ns/dbchangelog
+   http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-4.14.xsd">
+
+    <changeSet id="202409271524" author="enock">
+        <sql>
+            CREATE SCHEMA IF NOT EXISTS public;
+        </sql>
+    </changeSet>
+
+
+    <changeSet id="2024-07-28 14:54" author="enock">
+        <preConditions onFail="MARK_RAN">
+            <not>
+                <tableExists tableName="users" schemaName="public"/>
+            </not>
+        </preConditions>
+        <createTable tableName="users" schemaName="public">
+            <column name="id" type="bigint" autoIncrement="true">
+                <constraints primaryKey="true"/>
+            </column>
+            <column name="public_id" type="uuid"/>
+            <column name="date_created" type="timestamp"/>
+            <column name="date_modified" type="timestamp"/>
+            <column name="created_by" type="varchar(250)"/>
+            <column name="modified_by" type="varchar(250)"/>
+            <column name="deleted" type="boolean" defaultValueBoolean="false"/>
+            <column name="first_name" type="VARCHAR(255)"/>
+            <column name="last_name" type="VARCHAR(255)"/>
+            <column name="other_name" type="VARCHAR(255)"/>
+            <column name="user_name" type="varchar(250)">
+                <constraints unique="true" uniqueConstraintName="unique_username_table_users" nullable="false"/>
+            </column>
+            <column name="password" type="VARCHAR(255)"/>
+            <column name="contact_email" type="VARCHAR(255)"/>
+            <column name="contact_phonenumber" type="VARCHAR(255)"/>
+            <column name="verified_email" type="BOOLEAN"/>
+            <column name="verified_phonenumber" type="BOOLEAN"/>
+            <column name="status" type="VARCHAR(255)"/>
+            <column name="change_password" type="BOOLEAN"/>
+        </createTable>
+    </changeSet>
+
+    <changeSet id="20240728 14:57" author="enock">
+        <preConditions>
+            <not>
+                <tableExists tableName="roles" schemaName="public"/>
+            </not>
+        </preConditions>
+        <createTable tableName="roles" schemaName="public">
+            <column name="id" type="bigint" autoIncrement="true">
+                <constraints primaryKey="true"/>
+            </column>
+            <column name="public_id" type="uuid"/>
+            <column name="date_created" type="timestamp"/>
+            <column name="date_modified" type="timestamp"/>
+            <column name="created_by" type="varchar(250)"/>
+            <column name="modified_by" type="varchar(250)"/>
+            <column name="deleted" type="boolean" defaultValueBoolean="false"/>
+            <column name="name" type="VARCHAR(255)"/>
+            <column name="description" type="VARCHAR(255)"/>
+        </createTable>
+    </changeSet>
+
+    <changeSet author="enock" id="20240728 15:00">
+        <preConditions onFail="MARK_RAN">
+            <not>
+                <tableExists schemaName="public" tableName="user_roles"/>
+            </not>
+        </preConditions>
+        <createTable schemaName="public" tableName="user_roles">
+            <column name="user_id_fk" type="BIGINT">
+                <constraints nullable="false"/>
+            </column>
+            <column name="role_id_fk" type="BIGINT">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+        <addForeignKeyConstraint baseColumnNames="user_id_fk" baseTableName="user_roles"
+                                 baseTableSchemaName="public" constraintName="user_id_fk_table_user_roles"
+                                 deferrable="false" initiallyDeferred="false" onDelete="NO ACTION" onUpdate="NO ACTION"
+                                 referencedColumnNames="id" referencedTableName="users"
+                                 referencedTableSchemaName="public"/>
+        <addForeignKeyConstraint baseColumnNames="role_id_fk" baseTableName="user_roles"
+                                 baseTableSchemaName="public" constraintName="role_id_fk_table_user_roles"
+                                 deferrable="false" initiallyDeferred="false" onDelete="NO ACTION" onUpdate="NO ACTION"
+                                 referencedColumnNames="id" referencedTableName="roles"
+                                 referencedTableSchemaName="public"/>
+
+    </changeSet>
+
+    <changeSet id="20240729 17:07" author="enock">
+        <preConditions>
+            <not>
+                <tableExists tableName="privileges" schemaName="public"/>
+            </not>
+        </preConditions>
+        <createTable tableName="privileges" schemaName="public">
+            <column name="id" type="bigint" autoIncrement="true">
+                <constraints primaryKey="true"/>
+            </column>
+            <column name="public_id" type="uuid"/>
+            <column name="date_created" type="timestamp"/>
+            <column name="date_modified" type="timestamp"/>
+            <column name="created_by" type="varchar(250)"/>
+            <column name="modified_by" type="varchar(250)"/>
+            <column name="deleted" type="boolean" defaultValueBoolean="false"/>
+            <column name="name" type="VARCHAR(255)"/>
+            <column name="role_id" type="bigint"/>
+        </createTable>
+        <addForeignKeyConstraint baseColumnNames="role_id" baseTableName="privileges"
+                                 baseTableSchemaName="public" constraintName="role_id_table_privileges"
+                                 deferrable="false" initiallyDeferred="false" onDelete="NO ACTION" onUpdate="NO ACTION"
+                                 referencedColumnNames="id" referencedTableName="roles"
+                                 referencedTableSchemaName="public"/>
+    </changeSet>
+
+</databaseChangeLog>

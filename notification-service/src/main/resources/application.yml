@@ -1,0 +1,49 @@
+server:
+  port: 8084
+spring:
+  application:
+    name: notification-service
+
+  datasource:
+    url: jdbc:postgresql://localhost:5432/tenten
+    username: postgres
+    password: 19pool90
+
+  jpa:
+    database-platform: org.hibernate.dialect.PostgreSQLDialect
+    hibernate:
+      ddl-auto: none
+
+  liquibase:
+    change-log: 'classpath:/db/changelog/liquibase.change-log.xml'
+
+
+  amqp:
+    deserialization:
+      trust:
+        all: true
+  api-docs:
+    path: /member-service-docs
+
+    #  hystrix:
+    #    command:
+    #      default:
+    #        execution:
+    #          timeout:
+    #            enabled: false
+    #          isolation:
+    #            thread:
+    #              timeoutInMilliseconds: 10000
+
+    #  eureka:
+    #    client:
+    #      register-with-eureka: true
+    #      fetch-registry: true
+
+#  logging:
+#    level:
+#      root: INFO
+#      com.example.demo_resource_server: DEBUG
+#      org.springframework.jdbc: DEBUG
+#      org.springframework.security: trace
+

@@ -1,0 +1,50 @@
+spring:
+  h2:
+    console:
+      enabled: true
+      path: /h2-console
+  datasource:
+    username: sa
+    password: sa
+    driverClassName: org.h2.Driver
+    url: jdbc:h2:mem:db;DB_CLOSE_DELAY=-1
+
+  jpa:
+    hibernate:
+      ddl-auto:none
+
+    properties:
+      hibernate:
+        dialect: org.hibernate.dialect.H2Dialect
+
+  batch:
+    job:
+      enabled: false
+
+  liquibase:
+    change-log: 'classpath:/test-liquibase.change-log.xml'
+  sql:
+    init:
+      data-locations: 'classpath:data-test.sql'
+      platform: test
+      continue-on-error: false
+#  rabbitmq:
+#    host: 127.0.0.1
+#    port: 5672
+#    username: guest
+#    password: guest
+
+user-management-service:
+  ribbon:
+    listOfServers: http://localhost:4562
+
+#feign:
+#  client:
+#    config:
+#      default:
+#        logger-level: full
+#
+#eureka:
+#  client:
+#    register-with-eureka: true
+#    fetch-registry: true

@@ -1,0 +1,39 @@
+<!--<databaseChangeLog-->
+<!--        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"-->
+<!--        xmlns:ext="http://www.liquibase.org/xml/ns/dbchangelog-ext"-->
+<!--        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"-->
+<!--        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog-ext-->
+<!--   http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-ext.xsd-->
+<!--   http://www.liquibase.org/xml/ns/dbchangelog-->
+<!--   https://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-4.15.xsd">-->
+
+<!--    <changeSet author="enock" id="1561172658474-1">-->
+<!--        <sql>-->
+<!--            CREATE SCHEMA IF NOT EXISTS public;-->
+<!--        </sql>-->
+<!--    </changeSet>-->
+
+
+<!--    <changeSet author="ADMIN (enock)" id="202409280950">-->
+<!--        <preConditions onFail="MARK_RAN">-->
+<!--            <not>-->
+<!--                <tableExists schemaName="public" tableName="users"/>-->
+<!--            </not>-->
+<!--        </preConditions>-->
+<!--        <createTable schemaName="public" tableName="users">-->
+<!--            <column autoIncrement="true" name="id" type="BIGINT">-->
+<!--                <constraints nullable="false" primaryKey="true" primaryKeyName="users_pkey"/>-->
+<!--            </column>-->
+<!--            <column defaultValueBoolean="false" name="deleted" type="BOOLEAN"/>-->
+<!--            <column name="public_id" type="UUID"/>-->
+<!--            <column name="first_name" type="VARCHAR(255)">-->
+<!--                <constraints nullable="false"/>-->
+<!--            </column>-->
+<!--            <column name="user_name" type="VARCHAR(255)">-->
+<!--                <constraints nullable="false"/>-->
+<!--            </column>-->
+<!--            <column name="contact_email" type="VARCHAR(255)"/>-->
+<!--        </createTable>-->
+<!--    </changeSet>-->
+
+<!--</databaseChangeLog>-->

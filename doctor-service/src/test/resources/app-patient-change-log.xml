@@ -1,0 +1,39 @@
+<databaseChangeLog
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+        xmlns:ext="http://www.liquibase.org/xml/ns/dbchangelog-ext"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog-ext
+   http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-ext.xsd
+   http://www.liquibase.org/xml/ns/dbchangelog
+   https://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-4.15.xsd">
+
+    <changeSet author="enock" id="728273798398-1">
+        <sql>
+            CREATE SCHEMA IF NOT EXISTS hospital_v1;
+        </sql>
+    </changeSet>
+
+
+    <changeSet author="enock" id="202410071542">
+        <preConditions onFail="MARK_RAN">
+            <not>
+                <tableExists schemaName="hospital_v1" tableName="patient"/>
+            </not>
+        </preConditions>
+        <createTable schemaName="hospital_v1" tableName="patient">
+            <column autoIncrement="true" name="id" type="BIGINT">
+                <constraints nullable="false" primaryKey="true" primaryKeyName="users_pkey"/>
+            </column>
+            <column defaultValueBoolean="false" name="deleted" type="BOOLEAN"/>
+            <column name="public_id" type="UUID"/>
+            <column name="first_name" type="VARCHAR(255)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="last_name" type="VARCHAR(255)"/>
+            <column name="email_address" type="VARCHAR(255)"/>
+            <column name="national_id" type="VARCHAR(255)"/>
+
+        </createTable>
+    </changeSet>
+
+</databaseChangeLog>

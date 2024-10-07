@@ -1,0 +1,208 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+        xmlns:ext="http://www.liquibase.org/xml/ns/dbchangelog-ext"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog-ext
+   http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-ext.xsd
+   http://www.liquibase.org/xml/ns/dbchangelog
+   http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-4.14.xsd">
+
+    <changeSet id="20241004 16:56" author="enock">
+        <sql>
+            CREATE SCHEMA IF NOT EXISTS hospital_v1;
+        </sql>
+    </changeSet>
+    <changeSet id="20241004 17:11" author="enock">
+        <preConditions onFail="MARK_RAN">
+            <not>
+                <tableExists tableName="departments" schemaName="hospital_v1"/>
+            </not>
+        </preConditions>
+        <createTable tableName="departments" schemaName="hospital_v1">
+            <column name="id" type="bigint" autoIncrement="true">
+                <constraints primaryKey="true"/>
+            </column>
+            <column name="public_id" type="uuid"/>
+            <column name="date_created" type="timestamp"/>
+            <column name="date_modified" type="timestamp"/>
+            <column name="modified_by_id" type="bigint"/>
+            <column name="created_by_id" type="bigint"/>
+            <column name="deleted" type="boolean" defaultValueBoolean="false"/>
+            <column name="name" type="varchar(255)"/>
+            <column name="description" type="varchar(255)"/>
+
+        </createTable>
+        <addForeignKeyConstraint baseColumnNames="modified_by_id" baseTableName="departments"
+                                 baseTableSchemaName="hospital_v1" constraintName="modified_by_id_table_departments"
+                                 deferrable="false" initiallyDeferred="false" onDelete="NO ACTION" onUpdate="NO ACTION"
+                                 referencedColumnNames="id" referencedTableName="users"
+                                 referencedTableSchemaName="public"/>
+        <addForeignKeyConstraint baseColumnNames="created_by_id" baseTableName="departments"
+                                 baseTableSchemaName="hospital_v1" constraintName="created_by_id_table_departments"
+                                 deferrable="false" initiallyDeferred="false" onDelete="NO ACTION" onUpdate="NO ACTION"
+                                 referencedColumnNames="id" referencedTableName="users"
+                                 referencedTableSchemaName="public"/>
+    </changeSet>
+
+    <changeSet id="20241004 16:58" author="enock">
+        <preConditions onFail="MARK_RAN">
+            <not>
+                <tableExists tableName="bookings" schemaName="hospital_v1"/>
+            </not>
+        </preConditions>
+        <createTable tableName="bookings" schemaName="hospital_v1">
+            <column name="id" type="bigint" autoIncrement="true">
+                <constraints primaryKey="true"/>
+            </column>
+            <column name="public_id" type="uuid"/>
+            <column name="date_created" type="timestamp"/>
+            <column name="date_modified" type="timestamp"/>
+            <column name="modified_by_id" type="bigint"/>
+            <column name="created_by_id" type="bigint"/>
+            <column name="deleted" type="boolean" defaultValueBoolean="false"/>
+            <column name="visit_type" type="varchar(255)"/>
+            <column name="visit_date" type="timestamp"/>
+            <column name="department_id" type="bigint"/>
+            <column name="status" type="varchar(255)"/>
+            <column name="patient_id" type="bigint"/>
+            <column name="booking_number" type="varchar(255)"/>
+        </createTable>
+        <addForeignKeyConstraint baseColumnNames="modified_by_id" baseTableName="bookings"
+                                 baseTableSchemaName="hospital_v1" constraintName="modified_by_id_table_bookings"
+                                 deferrable="false" initiallyDeferred="false" onDelete="NO ACTION" onUpdate="NO ACTION"
+                                 referencedColumnNames="id" referencedTableName="users"
+                                 referencedTableSchemaName="public"/>
+        <addForeignKeyConstraint baseColumnNames="created_by_id" baseTableName="bookings"
+                                 baseTableSchemaName="hospital_v1" constraintName="created_by_id_table_bookings"
+                                 deferrable="false" initiallyDeferred="false" onDelete="NO ACTION" onUpdate="NO ACTION"
+                                 referencedColumnNames="id" referencedTableName="users"
+                                 referencedTableSchemaName="public"/>
+        <addForeignKeyConstraint baseColumnNames="department_id" baseTableName="bookings"
+                                 baseTableSchemaName="hospital_v1" constraintName="department_id_table_bookings"
+                                 deferrable="false" initiallyDeferred="false" onDelete="NO ACTION" onUpdate="NO ACTION"
+                                 referencedColumnNames="id" referencedTableName="departments"
+                                 referencedTableSchemaName="hospital_v1"/>
+        <addForeignKeyConstraint baseColumnNames="patient_id" baseTableName="bookings"
+                                 baseTableSchemaName="hospital_v1" constraintName="patient_id_table_bookings"
+                                 deferrable="false" initiallyDeferred="false" onDelete="NO ACTION" onUpdate="NO ACTION"
+                                 referencedColumnNames="id" referencedTableName="patient"
+                                 referencedTableSchemaName="hospital_v1"/>
+    </changeSet>
+
+
+
+    <changeSet id="20241004 17:16" author="enock">
+        <preConditions onFail="MARK_RAN">
+            <not>
+                <tableExists tableName="inclusion" schemaName="hospital_v1"/>
+            </not>
+        </preConditions>
+        <createTable tableName="inclusion" schemaName="hospital_v1">
+            <column name="id" type="bigint" autoIncrement="true">
+                <constraints primaryKey="true"/>
+            </column>
+            <column name="public_id" type="uuid"/>
+            <column name="date_created" type="timestamp"/>
+            <column name="date_modified" type="timestamp"/>
+            <column name="modified_by_id" type="bigint"/>
+            <column name="created_by_id" type="bigint"/>
+            <column name="deleted" type="boolean" defaultValueBoolean="false"/>
+            <column name="name" type="varchar(255)"/>
+            <column name="department_id" type="bigint"/>
+
+        </createTable>
+        <addForeignKeyConstraint baseColumnNames="modified_by_id" baseTableName="inclusion"
+                                 baseTableSchemaName="hospital_v1" constraintName="modified_by_id_table_inclusion"
+                                 deferrable="false" initiallyDeferred="false" onDelete="NO ACTION" onUpdate="NO ACTION"
+                                 referencedColumnNames="id" referencedTableName="users"
+                                 referencedTableSchemaName="public"/>
+        <addForeignKeyConstraint baseColumnNames="created_by_id" baseTableName="inclusion"
+                                 baseTableSchemaName="hospital_v1" constraintName="created_by_id_table_inclusion"
+                                 deferrable="false" initiallyDeferred="false" onDelete="NO ACTION" onUpdate="NO ACTION"
+                                 referencedColumnNames="id" referencedTableName="users"
+                                 referencedTableSchemaName="public"/>
+        <addForeignKeyConstraint baseColumnNames="department_id" baseTableName="inclusion"
+                                 baseTableSchemaName="hospital_v1" constraintName="department_id_table_inclusion"
+                                 deferrable="false" initiallyDeferred="false" onDelete="NO ACTION" onUpdate="NO ACTION"
+                                 referencedColumnNames="id" referencedTableName="departments"
+                                 referencedTableSchemaName="hospital_v1"/>
+    </changeSet>
+
+    <changeSet id="20241004 17:22" author="enock">
+        <preConditions>
+            <not>
+                <tableExists tableName="booking_reasons" schemaName="hospital_v1"/>
+            </not>
+        </preConditions>
+        <createTable tableName="booking_reasons" schemaName="hospital_v1">
+            <column name="booking_id" type="bigint">
+                <constraints nullable="false"/>
+            </column>
+            <column name="reason" type="varchar(250)">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+        <addForeignKeyConstraint baseColumnNames="booking_id" baseTableName="booking_reasons"
+                                 baseTableSchemaName="hospital_v1"
+                                 constraintName="booking_id_table_booking_reasons" deferrable="false"
+                                 initiallyDeferred="false" onDelete="NO ACTION" onUpdate="NO ACTION"
+                                 referencedColumnNames="id" referencedTableName="bookings"
+                                 referencedTableSchemaName="hospital_v1"/>
+        <addUniqueConstraint tableName="booking_reasons" columnNames="booking_id, reason"
+                             constraintName="unique_booking_id_reason_table_booking_reasons"
+                             schemaName="hospital_v1"/>
+    </changeSet>
+
+    <changeSet id="20241004 17:38" author="enock">
+        <preConditions onFail="HALT">
+            <not>
+                <tableExists schemaName="hospital_v1" tableName="book_doctor"/>
+            </not>
+        </preConditions>
+        <createTable schemaName="hospital_v1" tableName="book_doctor">
+            <column name="booking_id" type="bigint">
+                <constraints nullable="false"/>
+            </column>
+            <column name="doctor_id" type="bigint">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+        <addForeignKeyConstraint baseColumnNames="booking_id" baseTableName="book_doctor"
+                                 baseTableSchemaName="hospital_v1"
+                                 constraintName="fk_booking_id_table_book_doctor"
+                                 deferrable="false" initiallyDeferred="false" onDelete="NO ACTION" onUpdate="NO ACTION"
+                                 referencedColumnNames="id" referencedTableName="bookings"
+                                 referencedTableSchemaName="hospital_v1"/>
+        <addForeignKeyConstraint baseColumnNames="doctor_id" baseTableName="book_doctor"
+                                 baseTableSchemaName="hospital_v1"
+                                 constraintName="fk_doctor_id_table_book_doctor"
+                                 deferrable="false" initiallyDeferred="false" onDelete="NO ACTION" onUpdate="NO ACTION"
+                                 referencedColumnNames="id" referencedTableName="users"
+                                 referencedTableSchemaName="public"/>
+        <addUniqueConstraint columnNames="booking_id, doctor_id" tableName="book_doctor"
+                             schemaName="hospital_v1"
+                             constraintName="unique_booking_id_table_book_doctor"/>
+    </changeSet>
+
+    <changeSet id="20241007 17:16" author="enock">
+        <preConditions onFail="MARK_RAN">
+            <not>
+                <tableExists tableName="booking_counters" schemaName="hospital_v1"/>
+            </not>
+        </preConditions>
+        <createTable schemaName="hospital_v1" tableName="booking_counters">
+            <column autoIncrement="true" name="counter_id" type="BIGSERIAL">
+                <constraints nullable="false" primaryKey="true"/>
+            </column>
+            <column name="counter_version" type="bigint"/>
+            <column name="counter_type" type="varchar(255)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="counter_current" type="integer">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+    </changeSet>
+
+</databaseChangeLog>
