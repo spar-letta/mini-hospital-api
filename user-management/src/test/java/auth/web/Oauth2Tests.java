@@ -17,12 +17,12 @@ public class Oauth2Tests extends AuthApplicationTests {
     @Test
     public void standardEndpoints() {
         given()
-                .get("/auth/.well-known/openid-configuration")
+                .get("/.well-known/openid-configuration")
                 .then().log().all()
                 .statusCode(200);
 
         given()
-                .get("/auth/oauth2/jwks")
+                .get("/oauth2/jwks")
                 .then().log().all()
                 .statusCode(200);
     }
@@ -32,8 +32,8 @@ public class Oauth2Tests extends AuthApplicationTests {
         String token = getToken();
         given()
                 .header("Authorization", "Bearer " + token).log().all()
-                .get("/auth/profile")
-                .then().log().all()
+                .get("/profile")
+                .then()
                 .statusCode(200)
                 .body("firstName", equalTo("admin"))
                 .body("lastName", equalTo("admin1"))
@@ -49,9 +49,9 @@ public class Oauth2Tests extends AuthApplicationTests {
 
         given()
                 .header("Authorization", "Basic " + Base64.getEncoder().encodeToString("browser-client:secret".getBytes(StandardCharsets.UTF_8)))
-                .formParams(introspectPayload).log().all()
-                .post("/auth/oauth2/introspect")
-                .then().log().all()
+                .formParams(introspectPayload)
+                .post("/oauth2/introspect")
+                .then()
                 .statusCode(200);
     }
 
@@ -60,7 +60,7 @@ public class Oauth2Tests extends AuthApplicationTests {
         String token = getToken();
         given()
                 .header("Authorization", "Bearer " + token).log().all()
-                .get("/auth/users")
+                .get("/users")
                 .then().log().all()
                 .statusCode(200);
 
@@ -71,7 +71,7 @@ public class Oauth2Tests extends AuthApplicationTests {
         String token = getToken();
         given()
                 .header("Authorization", "Bearer " + token).log().all()
-                .get("/auth/users/{publicId}", "bb874ce2-dc46-4f11-8915-c1d644f236df")
+                .get("/users/{publicId}", "bb874ce2-dc46-4f11-8915-c1d644f236df")
                 .then().log().all()
                 .statusCode(200);
 
@@ -85,8 +85,8 @@ public class Oauth2Tests extends AuthApplicationTests {
         given()
                 .contentType("application/json")
                 .header("Authorization", "Bearer " + getToken()).log().all()
-                .body(roleDto)
-                .put("/auth/users/assignRole/{publicId}", "bb874ce2-dc46-4f11-8915-c1d644f236df")
+                .body(roleDto).log().all()
+                .put("/users/assignRole/{publicId}", "bb874ce2-dc46-4f11-8915-c1d644f236df")
                 .then().log().all()
                 .statusCode(200);
     }

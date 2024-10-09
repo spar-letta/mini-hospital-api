@@ -12,7 +12,7 @@ public class InternalRestControllerTests extends AuthApplicationTests {
     public void testGetUser() {
         given()
                 .queryParam("username", "123456")
-                .get("/auth/internal/user")
+                .get("/internal/user")
                 .then().log().all()
                 .statusCode(200);
     }

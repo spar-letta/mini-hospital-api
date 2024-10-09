@@ -45,7 +45,7 @@ public class User extends AbstractAuditableEntity implements UserDetails {
     private String userName;
 
     @Column(name = "password")
-    @JsonView({BaseView.UserDetailedView.class, BaseView.UserCreatedDetailedView.class, BaseView.UserProfileView.class})
+//    @JsonView({BaseView.UserDetailedView.class, BaseView.UserCreatedDetailedView.class, BaseView.UserProfileView.class})
     private String password;
 
     @Column(name = "contact_email")

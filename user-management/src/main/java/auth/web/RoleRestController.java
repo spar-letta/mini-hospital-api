@@ -11,6 +11,7 @@ import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.enums.SecuritySchemeIn;
 import io.swagger.v3.oas.annotations.enums.SecuritySchemeType;
 import io.swagger.v3.oas.annotations.media.Content;
+import io.swagger.v3.oas.annotations.media.ExampleObject;
 import io.swagger.v3.oas.annotations.media.Schema;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.security.SecurityScheme;
@@ -41,7 +42,6 @@ import java.util.UUID;
         in = SecuritySchemeIn.HEADER,
         bearerFormat = "JWT"
 )
-@Tag(name = "roles")
 public class RoleRestController {
     private static final Logger log = LoggerFactory.getLogger(RoleRestController.class);
     private final RoleService roleService;
@@ -50,8 +50,9 @@ public class RoleRestController {
     @PreAuthorize("hasAuthority('CREATE_ROLE')")
     @PostMapping
     @JsonView(BaseView.RoleView.class)
-    @Operation(responses = {
-            @ApiResponse(responseCode = "200", description = "OK", content = @Content(mediaType = "application/json", schema = @Schema(example = Examples.USER_OK_RESPONSE)))})
+    @Operation(summary = "Create Role", responses = {
+            @ApiResponse(responseCode = "200", description = "OK", content = @Content(mediaType = "application/json", schema = @Schema(example = Examples.ROLE_CREATED_OK_RESPONSE)))
+    }, requestBody = @io.swagger.v3.oas.annotations.parameters.RequestBody(required = true, content = @Content(examples = {@ExampleObject(name = "Create Role Request", value = Examples.CREATE_ROLE_REQUEST)})))
     public Role createUser(@RequestBody @Valid CreateRoleDTO createRoleDTO) throws Exception {
         return roleService.createRole(createRoleDTO);
     }
@@ -59,6 +60,8 @@ public class RoleRestController {
     @PreAuthorize("hasAuthority('READ_ROLES')")
     @GetMapping
     @JsonView(BaseView.RoleView.class)
+    @Operation(summary = "Read all roles", responses = {
+            @ApiResponse(responseCode = "200", description = "OK", content = @Content(mediaType = "application/json", schema = @Schema(example = Examples.READ_ROLES_OK_RESPONSE)))})
     @PageableAsQueryParam
     public Page<Role> getAllRoles(@PageableDefault Pageable pageable) throws Exception {
         return roleService.getAllRoles(pageable);
@@ -66,6 +69,9 @@ public class RoleRestController {
 
     @PatchMapping("/assignPrivilegeToRole/{rolePublicId}")
     @PreAuthorize("hasAuthority('ASSIGN_PRIVILEGE_TO_ROLE')")
+    @Operation(summary = "Assign Privilege to Role", responses = {
+            @ApiResponse(responseCode = "200", description = "OK", content = @Content(mediaType = "application/json", schema = @Schema(example = Examples.ASSIGN_PRIVILEGE_TO_ROLE_response)))
+    }, requestBody = @io.swagger.v3.oas.annotations.parameters.RequestBody(required = true, content = @Content(examples = {@ExampleObject(name = "ASSIGN PRIVILEGE TO ROLE request", value = Examples.ASSIGN_PRIVILEGE_TO_ROLE_request)})))
     @JsonView(BaseView.RoleView.class)
     public Role assignPrivilegeToRole(@PathVariable UUID rolePublicId, @RequestBody @Valid RolePrivilegeDto request) throws Exception {
         return roleService.assignPrivilegeToRole(rolePublicId, request);

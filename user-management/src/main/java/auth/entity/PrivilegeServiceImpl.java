@@ -33,12 +33,8 @@ public class PrivilegeServiceImpl implements PrivilegeService {
     }
 
     @Override
-    public List<Privilege> fetchAllPrivileges() {
+    public Page<Privilege> fetchAllPrivileges(Pageable pageable) {
         List<Privilege> all = privilegeRepository.findAllPrivileges();
-        all.forEach(item ->{
-            log.info("=========data {}", item.getName());
-        });
-
-        return all;
+        return new PageImpl<>(all, pageable, all.size());
     }
 }

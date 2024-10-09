@@ -10,6 +10,7 @@ import auth.entity.User;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
 import io.swagger.v3.oas.annotations.media.Content;
+import io.swagger.v3.oas.annotations.media.ExampleObject;
 import io.swagger.v3.oas.annotations.media.Schema;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.tags.Tag;
@@ -28,15 +29,15 @@ import java.util.UUID;
 @RequestMapping("/users")
 @Tag(name = "users")
 @RequiredArgsConstructor
-@Tag(name = "users")
 public class UserRestController {
 
     private final UserService userService;
 
     @PostMapping
     @JsonView(BaseView.UserCreatedDetailedView.class)
-    @Operation(responses = {
-            @ApiResponse(responseCode = "200", description = "OK", content = @Content(mediaType = "application/json", schema = @Schema(example = Examples.USER_OK_RESPONSE)))})
+    @Operation(summary = "Create User", responses = {
+            @ApiResponse(responseCode = "200", description = "OK", content = @Content(mediaType = "application/json", schema = @Schema(example = Examples.USER_OK_RESPONSE)))
+    }, requestBody = @io.swagger.v3.oas.annotations.parameters.RequestBody(required = true, content = @Content(examples = {@ExampleObject(name = "Create User Request", value = Examples.CREATE_USER_REQUEST)})))
     public User createUser(@RequestBody @Valid CreateUserDTO createUserDTO) {
         return userService.createUser(createUserDTO);
     }
@@ -54,8 +55,8 @@ public class UserRestController {
     @Operation(responses = {
             @ApiResponse(responseCode = "200", description = "OK", content = @Content(mediaType = "application/json", schema = @Schema(example = Examples.USERS_OK_RESPONSE)))})
     @PageableAsQueryParam
-    public List<User> getUsers(@Parameter(hidden = true) @PageableDefault(size = 20) Pageable pageable) {
-        return userService.getUsers(pageable).getContent();
+    public Page<User> getUsers(@Parameter(hidden = true) @PageableDefault(size = 20) Pageable pageable) {
+        return userService.getUsers(pageable);
     }
 
     @PutMapping("/{publicId}")
@@ -68,8 +69,9 @@ public class UserRestController {
 
     @PutMapping("/assignRole/{publicId}")
     @JsonView(BaseView.UserDetailedView.class)
-    @Operation(responses = {
-            @ApiResponse(responseCode = "200", description = "OK", content = @Content(mediaType = "application/json", schema = @Schema(example = Examples.USER_OK_RESPONSE)))})
+    @Operation(summary = "Create User", responses = {
+            @ApiResponse(responseCode = "200", description = "OK", content = @Content(mediaType = "application/json", schema = @Schema(example = Examples.USER_ROLE_ASSIGNED_OK_RESPONSE)))
+    }, requestBody = @io.swagger.v3.oas.annotations.parameters.RequestBody(required = true, content = @Content(examples = {@ExampleObject(name = "Create User Request", value = Examples.ASSIGN_ROLE_TO_USER_REQUEST)})))
     public User assignRoleToUser(@PathVariable UUID publicId, @RequestBody @Valid RoleDto request) {
         return userService.assignRoleToUser(request, publicId);
     }

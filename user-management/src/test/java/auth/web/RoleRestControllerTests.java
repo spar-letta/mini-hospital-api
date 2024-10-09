@@ -1,6 +1,7 @@
 package auth.web;
 
 import auth.AuthApplicationTests;
+import auth.dto.request.CreateRoleDTO;
 import auth.dto.request.RolePrivilegeDto;
 import auth.entity.Role;
 import org.junit.Test;
@@ -14,7 +15,7 @@ public class RoleRestControllerTests extends AuthApplicationTests {
 
     @Test
     public void testCreateRole() {
-        Role role = new Role();
+        CreateRoleDTO role = new CreateRoleDTO();
         role.setName("ROLE_ADMIN_TEST");
         role.setDescription("system administrator");
 
@@ -23,13 +24,13 @@ public class RoleRestControllerTests extends AuthApplicationTests {
                 .header("Authorization", "Bearer " + token)
                 .contentType("application/json")
                 .body(role).log().all()
-                .post("/auth/roles")
+                .post("/roles")
                 .then().log().all()
                 .statusCode(200);
 
         given()
                 .header("Authorization", "Bearer " + token)
-                .get("/auth/roles")
+                .get("/roles")
                 .then().log().all()
                 .statusCode(200);
     }
@@ -40,7 +41,7 @@ public class RoleRestControllerTests extends AuthApplicationTests {
 
         given()
                 .header("Authorization", "Bearer " + token).log().all()
-                .get("/auth/roles")
+                .get("/roles")
                 .then().log().all()
                 .statusCode(200);
     }
@@ -53,8 +54,8 @@ public class RoleRestControllerTests extends AuthApplicationTests {
         given()
                 .header("Authorization", "Bearer " + getToken())
                 .contentType("application/json")
-                .body(rolePrivilegeDto)
-                .patch("/auth/roles/assignPrivilegeToRole/{rolePublicId}", "fb874ce2-dc46-4f11-8915-c1d644f236dd")
+                .body(rolePrivilegeDto).log().all()
+                .patch("/roles/assignPrivilegeToRole/{rolePublicId}", "fb874ce2-dc46-4f11-8915-c1d644f236dd")
                 .then().log().all()
                 .statusCode(200);
 

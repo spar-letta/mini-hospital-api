@@ -2,11 +2,11 @@ server:
   servlet:
     context-path: /
   port:
-    8082
+    8081
 
 spring:
   application:
-    name: member-service
+    name: user-management-service
 
   datasource:
     url: jdbc:postgresql://localhost:5432/tenten
@@ -21,24 +21,23 @@ spring:
   liquibase:
     change-log: 'classpath:/db/changelog/liquibase.change-log.xml'
 
-  logging:
-    level:
-      root: INFO
-      com.example.demo_resource_server: DEBUG
-      org.springframework.jdbc: DEBUG
-      org.springframework.security: trace
+
+  amqp:
+    deserialization:
+      trust:
+        all: true
 
 openapi:
   service:
-    title: member-service doc
+    title: user-management-service doc
     version: 1.0.0
     url: http://localhost:8080
 
 springdoc:
   api-docs:
-    path: /member-service/v3/api-docs
+    path: /user-management-service/v3/api-docs
   swagger-ui:
-    path: /member-service/swagger-ui.html
+    path: /user-management-service/swagger-ui.html
 
 eureka:
   client:

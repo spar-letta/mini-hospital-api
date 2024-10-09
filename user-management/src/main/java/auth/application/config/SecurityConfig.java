@@ -69,10 +69,10 @@ import static org.springframework.security.web.util.matcher.AntPathRequestMatche
 public class SecurityConfig {
 
     private static final Logger log = LoggerFactory.getLogger(SecurityConfig.class);
-    @Value("${application.url}")
+    @Value("http://localhost:8081")
     private String applicationUrl;
 
-    @Value("${server.servlet.context-path}")
+    @Value("/")
     private String contextPath;
 
     private final UserDetailService userDetailService;
@@ -137,12 +137,12 @@ public class SecurityConfig {
         };
     }
 
-    @Bean
-    public AuthorizationServerSettings authorizationServerSettings() {
-        return AuthorizationServerSettings.builder()
-                .issuer(applicationUrl + contextPath)
-                .build();
-    }
+//    @Bean
+//    public AuthorizationServerSettings authorizationServerSettings() {
+//        return AuthorizationServerSettings.builder()
+//                .issuer(applicationUrl)
+//                .build();
+//    }
 
     @Bean
     public TokenSettings tokenSettings() {

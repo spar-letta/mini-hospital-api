@@ -84,7 +84,7 @@ public abstract class AuthApplicationTests {
 //                .extract().as(JsonNode.class);
 
         JsonNode user = given()
-                .get("/auth/users/{publicId}", "bb874ce2-dc46-4f11-8915-c1d644f236df")
+                .get("/users/{publicId}", "bb874ce2-dc46-4f11-8915-c1d644f236df")
                 .then()
                 .statusCode(200)
                 .extract().as(JsonNode.class);
@@ -103,7 +103,7 @@ public abstract class AuthApplicationTests {
         String accessToken = given()
                 .header("Authorization", "Basic " + Base64.getEncoder().encodeToString("browser-client:secret".getBytes(StandardCharsets.UTF_8)))
                 .formParams(tokenAccessPayload).log().all()
-                .post("/auth/oauth2/token")
+                .post("/oauth2/token")
                 .then()
                 .statusCode(200)
                 .body("access_token", notNullValue())

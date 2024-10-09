@@ -10,5 +10,5 @@ import java.util.List;
 public interface PrivilegeService {
     Privilege createPrivilege(PrivilegeDto privilegeDto);
 
-    List<Privilege> fetchAllPrivileges();
+    Page<Privilege> fetchAllPrivileges(Pageable pageable);
 }

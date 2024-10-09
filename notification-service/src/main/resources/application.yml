@@ -1,5 +1,9 @@
 server:
-  port: 8084
+  servlet:
+    context-path: /
+  port:
+    8084
+
 spring:
   application:
     name: notification-service
@@ -22,28 +26,27 @@ spring:
     deserialization:
       trust:
         all: true
+
+openapi:
+  service:
+    title: notification-service doc
+    version: 1.0.0
+    url: http://localhost:8080
+
+springdoc:
   api-docs:
-    path: /member-service-docs
+    path: /notification-service/v3/api-docs
+  swagger-ui:
+    path: /notification-service/swagger-ui.html
 
-    #  hystrix:
-    #    command:
-    #      default:
-    #        execution:
-    #          timeout:
-    #            enabled: false
-    #          isolation:
-    #            thread:
-    #              timeoutInMilliseconds: 10000
+eureka:
+  client:
+    register-with-eureka: true
+    fetch-registry: true
+    service-url:
+      defaultZone: http://localhost:8761/eureka
+  instance:
+    hostname: localhost
 
-    #  eureka:
-    #    client:
-    #      register-with-eureka: true
-    #      fetch-registry: true
 
-#  logging:
-#    level:
-#      root: INFO
-#      com.example.demo_resource_server: DEBUG
-#      org.springframework.jdbc: DEBUG
-#      org.springframework.security: trace
 
