@@ -5,6 +5,13 @@ server:
     8080
 
 spring:
+  security:
+    oauth2:
+      resourceserver:
+        opaquetoken:
+          introspection-uri: http://localhost:8081/oauth2/introspect
+          client-id: browser-client
+          client-secret: secret
   application:
     name: gateway-service
   cloud:
@@ -17,26 +24,26 @@ spring:
           uri: lb://doctor-service
           predicates:
             - Path=/departments/** , /doctor-service/v3/api-docs
-          filters:
-            - AuthenticationFilter
+
+        - id: doctor-service
+          uri: lb://doctor-service
+          predicates:
+            - Path=/bookings/** , /doctor-service/v3/api-docs
+
         - id: member-service
           uri: lb://member-service
           predicates:
             - Path=/patients/** , /member-service/v3/api-docs
-          filters:
-            - AuthenticationFilter
+
         - id: notification-service
           uri: lb://notification-service
           predicates:
             - Path=/auditReport/** , /notification-service/v3/api-docs
-          filters:
-            - AuthenticationFilter
+
         - id: user-management-service
           uri: lb://user-management-service
           predicates:
             - Path=/users/** , /user-management-service/v3/api-docs
-          filters:
-            - AuthenticationFilter
 
 springdoc:
   enable-native-support: true

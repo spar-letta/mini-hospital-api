@@ -30,9 +30,10 @@ spring:
     change-log: 'classpath:/db/changelog/liquibase.change-log.xml'
 
   batch:
+    jdbc:
+      initialize-schema: always
     job:
-      enabled: false
-
+      enabled: 'false'
 openapi:
   service:
     title: doctor-service doc

@@ -26,9 +26,18 @@ public class BookingRestControllerTests extends DoctorServiceApplicationTests {
         request.setDepartmentId(UUID.fromString("4616953c-cb4e-4536-b3ff-0132aea01995"));
 
         given()
+                .auth()
+                .oauth2(accessToken)
                 .contentType(ContentType.JSON)
                 .body(request)
                 .post("/bookings")
+                .then()
+                .statusCode(200);
+
+        given()
+                .auth()
+                .oauth2(accessToken)
+                .get("/bookings")
                 .then().log().all()
                 .statusCode(200);
     }

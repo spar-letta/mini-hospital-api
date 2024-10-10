@@ -17,8 +17,7 @@ import org.springframework.test.context.junit4.SpringRunner;
 
 import java.io.IOException;
 
-import static com.javenock.doctor_service.mock.UserManagementServicesMock.setupMockGetUserDoctor;
-import static com.javenock.doctor_service.mock.UserManagementServicesMock.setupMockGetUserPatient;
+import static com.javenock.doctor_service.mock.UserManagementServicesMock.*;
 
 @RunWith(SpringRunner.class)
 @ActiveProfiles("test")
@@ -37,6 +36,7 @@ public abstract class DoctorServiceApplicationTests {
     @Autowired
     private WireMockServer mockPatientService;
 
+    public String accessToken = "eyJraWQiOiI0Y2YyZDA1My1mMzQ3LTQ2NjItODQzOC0xZDBiYTZjMjA1Y2EiLCJhbGciOiJSUzI1NiJ9.eyJzdWIiOiJicm93c2VyLWNsaWVudCIsImF1ZCI6ImJyb3dzZXItY2xpZW50IiwibmJmIjoxNzI4NTcxMTg2LCJzY29wZSI6Im9wZW5pZCBwcm9maWxlIiwiaXNzIjoiaHR0cDovL2xvY2FsaG9zdDo4MDgxIiwidXNlclB1YmxpY0lkIjoiZjZmZDdmOTktMTg1MC00MmE1LWI5YzgtODBmMTkwOGM2MjkyIiwiZXhwIjoxNzI4NjU3NTg2LCJpYXQiOjE3Mjg1NzExODYsImp0aSI6IjVhNGVhZmFiLTRkYWEtNDNiZC04ZDU5LWU0NzAwNDg2NDBiZiIsImF1dGhvcml0aWVzIjpbIlJFQURfTUVNQkVSIiwiREVMRVRFX01FTUJFUiIsIlVQREFURV9NRU1CRVIiLCJDUkVBVEVfTUVNQkVSIiwiUkVBRF9ERVBBUlRNRU5UUyIsIlJFQURfQk9PS0lOR1MiLCJDUkVBVEVfQk9PS0lORyIsIlJFQURfQVVESVRfUkVDT1JEUyJdLCJ1c2VybmFtZSI6ImphdmVub2NrQWRtaW4ifQ.WDjOWAlYFPFul7cHHoV64RuSQaPP3MsB_zWTRdVrb_TVzz8vsbhoiwsInvF8B29ydhnhKTWNI2E7m-L9yZetDSavpWlxf6inqrML1tKHgCPWMHOATzuKQdhj84lTy3zyRbMchF9MhzegJlg-ivIPw6zrj6lf_YAow4lqicNgitA2wjuHQUaT0M9wk9qSXjdLe4VtiXunP3o4RsEUDAmtMUBehWgVXF2pFKA6c1MfaOYRMvkrX8QHXjHCOi_dTY6v679ZqYejkIbPuUaLNvQER2z4tJiJVNtkyhokewRJ5SExI3rGKUnneHPvRvIR_8uyEyWXrpdncryB0vJZQaWD4A";
 
 
     @Before
@@ -45,7 +45,7 @@ public abstract class DoctorServiceApplicationTests {
         RestAssured.enableLoggingOfRequestAndResponseIfValidationFails();
         setupMockGetUserPatient(mockPatientService, "bb874ce2-dc46-4f11-8915-c1d644f236df");
         setupMockGetUserDoctor(mockDoctorService, "41408776-ade3-404f-8df0-5ab7b38b8bff");
-
+        setupMockGetUserByUsername(mockDoctorService, "javenockAdmin");
     }
 
 }

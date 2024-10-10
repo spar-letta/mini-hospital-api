@@ -21,7 +21,7 @@
             </not>
         </preConditions>
         <createTable schemaName="hospital_v1" tableName="patient">
-            <column autoIncrement="true" name="id" type="BIGINT">
+            <column autoIncrement="true" name="patient_id" type="BIGINT">
                 <constraints nullable="false" primaryKey="true" primaryKeyName="users_pkey"/>
             </column>
             <column defaultValueBoolean="false" name="deleted" type="BOOLEAN"/>

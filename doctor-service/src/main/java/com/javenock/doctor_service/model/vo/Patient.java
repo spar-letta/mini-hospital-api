@@ -23,7 +23,7 @@ public class Patient implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "patient_id")
-//    @JsonIgnore
+    @JsonIgnore
     private Long id;
 
     @Column(name = "public_id", updatable = false, insertable = false)

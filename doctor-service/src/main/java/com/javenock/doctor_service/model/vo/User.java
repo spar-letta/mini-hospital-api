@@ -24,7 +24,6 @@ public class User implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id")
-    @JsonIgnore
     private Long id;
 
     @Column(name = "public_id", updatable = false, insertable = false)

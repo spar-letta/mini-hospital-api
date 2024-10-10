@@ -18,6 +18,8 @@ public class DepartmentRestControllerTests extends DoctorServiceApplicationTests
     public void shouldGetAllDepartments() {
         batchJobService.processDepartmentImport();
         given()
+                .auth()
+                .oauth2(accessToken)
                 .queryParam("searchParam", "Radiology")
                 .get("/departments")
                 .then().log().all()

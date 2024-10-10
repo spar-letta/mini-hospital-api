@@ -25,12 +25,22 @@ public class UserManagementServicesMock {
     }
 
     public static void setupMockGetUserDoctor(WireMockServer mockService, String userId) throws IOException {
-        mockService.stubFor(WireMock.get(WireMock.urlEqualTo(String.format("/auth/internal/user/%s", userId)))
+        mockService.stubFor(WireMock.get(WireMock.urlEqualTo(String.format("/internal/user/%s", userId)))
                 .willReturn(WireMock.aResponse()
                         .withStatus(HttpStatus.OK.value())
                         .withHeader("Content-Type", MediaType.APPLICATION_JSON_VALUE)
                         .withBody(copyToString(
                                 UserManagementServicesMock.class.getClassLoader().getResourceAsStream("payload/fetchUserDoctorOk.json"),
+                                defaultCharset()))));
+    }
+
+    public static void setupMockGetUserByUsername(WireMockServer mockService, String username) throws IOException {
+        mockService.stubFor(WireMock.get(WireMock.urlEqualTo(String.format("/internal/user?username=%s", username)))
+                .willReturn(WireMock.aResponse()
+                        .withStatus(HttpStatus.OK.value())
+                        .withHeader("Content-Type", MediaType.APPLICATION_JSON_VALUE)
+                        .withBody(copyToString(
+                                UserManagementServicesMock.class.getClassLoader().getResourceAsStream("payload/fetchUserByUsernameOk.json"),
                                 defaultCharset()))));
     }
 }

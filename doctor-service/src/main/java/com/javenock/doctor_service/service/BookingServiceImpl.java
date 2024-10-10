@@ -11,16 +11,19 @@ import com.javenock.doctor_service.repository.BookingRepository;
 import com.javenock.doctor_service.repository.DepartmentRepository;
 import com.javenock.doctor_service.repository.PatientRepository;
 import com.javenock.doctor_service.repository.UserRepository;
-import com.javenock.doctor_service.utils.feign.PatientServiceClient;
 import com.javenock.doctor_service.utils.feign.UserServiceClient;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.coyote.BadRequestException;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Service;
 
 import java.util.Arrays;
 import java.util.List;
+import java.util.Optional;
 
 @Slf4j
 @Service
@@ -35,7 +38,9 @@ public class BookingServiceImpl implements BookingService {
     private final CounterService counterService;
 
     @Override
-    public Booking createBooking(BookingCreateRequest bookingCreateRequest) throws BadRequestException {
+    public Booking createBooking(BookingCreateRequest bookingCreateRequest, Authentication loggedInUser) throws BadRequestException {
+        String name = loggedInUser.getName();
+        User createdBy = userServiceClient.fetchUserByUsername(name).orElse(null);
         Booking booking = new Booking();
         if (bookingCreateRequest.getDepartmentId() == null)
             throw new BadRequestException("Sorry missing department");
@@ -66,13 +71,15 @@ public class BookingServiceImpl implements BookingService {
         booking.setDoctor(Arrays.asList(doctor));
         booking.setStatus(BookingStatus.PENDING);
         booking.setPatient(patient);
+        booking.setCreatedBy(createdBy);
         booking.setBookingNumber(String.format("VB-%d", counterService.getNextCounter(CounterType.VISIT_BOOKING)));
 
         return bookingRepository.save(booking);
     }
 
     @Override
-    public List<User> getAllUsers() {
-        return userServiceClient.fetchUserList();
+    public Page<Booking> getAllUsers(Pageable pageable, Authentication loggedInUser) {
+        return bookingRepository.findAll(pageable);
     }
+
 }

@@ -31,7 +31,8 @@ public class BootStrapUser extends BaseFile implements CommandLineRunner {
     @Override
     public void run(String... args) throws Exception {
 
-        Role rolePrivileges = createRolePrivileges("ROLE_ADMINISTRATOR", Arrays.asList("CREATE_MEMBER", "READ_MEMBER", "UPDATE_MEMBER", "DELETE_MEMBER"));
+        Role rolePrivileges = createRolePrivileges("ROLE_ADMINISTRATOR", Arrays.asList("CREATE_MEMBER", "READ_MEMBER", "UPDATE_MEMBER",
+                "DELETE_MEMBER","READ_AUDIT_RECORDS", "READ_DEPARTMENTS", "CREATE_BOOKING", "READ_BOOKINGS"));
         CreateUserDTO req = new CreateUserDTO();
         req.setFirstName("javenock");
         req.setLastName("javwangila");

@@ -26,6 +26,7 @@ public class User extends AbstractAuditableEntity implements UserDetails {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @JsonView(BaseView.internalView.class)
     @Column(name = "id")
     private Long id;
 

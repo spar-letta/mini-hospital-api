@@ -7,5 +7,5 @@ insert into public.users (id, public_id, user_name, deleted, contact_email, firs
 insert into hospital_v1.departments(id, public_id, deleted, name, description) values (100, '4616953c-cb4e-4536-b3ff-0132aea01995', false, 'departName', 'description of the department');
 insert into hospital_v1.departments(id, public_id, deleted, name, description) values (101, 'ad1c9025-136f-44c0-8233-942b2a1c79e2', false, 'departName1', 'description of the department1');
 
-insert into hospital_v1.patient(id, public_id, deleted, national_id, first_name, last_name) values (120, '78196df3-67de-497d-8165-6d20fac4a76a', false, '1299900', 'kevin', 'patient1');
+insert into hospital_v1.patient(patient_id, public_id, deleted, national_id, first_name, last_name) values (120, '78196df3-67de-497d-8165-6d20fac4a76a', false, '1299900', 'kevin', 'patient1');
 

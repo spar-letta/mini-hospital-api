@@ -8,6 +8,7 @@ import com.javenock.doctor_service.model.vo.User;
 import com.javenock.doctor_service.views.BaseView;
 import jakarta.persistence.*;
 import lombok.*;
+import org.hibernate.annotations.SQLRestriction;
 
 import java.time.LocalDateTime;
 import java.util.ArrayList;
@@ -19,6 +20,7 @@ import java.util.List;
 @AllArgsConstructor
 @NoArgsConstructor
 @Table(name = "bookings", schema = "hospital_v1")
+@SQLRestriction(value = "deleted = false")
 public class Booking extends BaseEntity {
 
     @Id
@@ -62,7 +64,7 @@ public class Booking extends BaseEntity {
     private BookingStatus status;
 
     @ManyToOne
-    @JoinColumn(name = "patient_bookind_id", referencedColumnName = "patient_id")
+    @JoinColumn(name = "patient_booking_id", referencedColumnName = "patient_id")
     @JsonView(BaseView.DoctorView.class)
     private Patient patient;
 
