@@ -10,10 +10,8 @@ public class PrivilegeRestControllerTests extends AuthApplicationTests {
 
     @Test
     public void testCreatePrivilege() {
-        PrivilegeDto privilegeDto = new PrivilegeDto();
-        privilegeDto.setName("READ_PRIVILEGE");
+        PrivilegeDto privilegeDto = new PrivilegeDto("READ_PRIVILEGE");
         String token = getToken();
-
 
         given()
                 .header("Authorization", "Bearer " + token)

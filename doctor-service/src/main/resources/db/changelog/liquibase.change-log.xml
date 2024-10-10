@@ -65,7 +65,7 @@
             <column name="visit_date" type="timestamp"/>
             <column name="department_id" type="bigint"/>
             <column name="status" type="varchar(255)"/>
-            <column name="patient_id" type="bigint"/>
+            <column name="patient_bookind_id" type="bigint"/>
             <column name="booking_number" type="varchar(255)"/>
         </createTable>
         <addForeignKeyConstraint baseColumnNames="modified_by_id" baseTableName="bookings"
@@ -83,10 +83,10 @@
                                  deferrable="false" initiallyDeferred="false" onDelete="NO ACTION" onUpdate="NO ACTION"
                                  referencedColumnNames="id" referencedTableName="departments"
                                  referencedTableSchemaName="hospital_v1"/>
-        <addForeignKeyConstraint baseColumnNames="patient_id" baseTableName="bookings"
+        <addForeignKeyConstraint baseColumnNames="patient_bookind_id" baseTableName="bookings"
                                  baseTableSchemaName="hospital_v1" constraintName="patient_id_table_bookings"
                                  deferrable="false" initiallyDeferred="false" onDelete="NO ACTION" onUpdate="NO ACTION"
-                                 referencedColumnNames="id" referencedTableName="patient"
+                                 referencedColumnNames="patient_id" referencedTableName="patient"
                                  referencedTableSchemaName="hospital_v1"/>
     </changeSet>
 

@@ -23,6 +23,9 @@ spring:
       ribbon:
         enabled: false
 
+    bootstrap:
+      enabled: true
+
   liquibase:
     change-log: 'classpath:/db/changelog/liquibase.change-log.xml'
 

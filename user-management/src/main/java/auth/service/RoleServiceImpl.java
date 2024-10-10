@@ -11,10 +11,7 @@ import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
-import java.util.List;
-import java.util.Objects;
-import java.util.Optional;
-import java.util.UUID;
+import java.util.*;
 import java.util.stream.Collectors;
 
 @Service
@@ -50,7 +47,7 @@ public class RoleServiceImpl implements RoleService {
     @Override
     public Role assignPrivilegeToRole(UUID rolePublicId, RolePrivilegeDto request) throws Exception {
         Role role = validateRole(rolePublicId);
-        List<Privilege> allPrivileges = role.getPrivileges();
+        List<Privilege> allPrivileges = new ArrayList<>();
         request.getPrivilegeUUIDs().forEach(itemId -> {
             Privilege privilege = privilegeRepository.findByPublicId(itemId);
             if(privilege != null) {
@@ -58,8 +55,10 @@ public class RoleServiceImpl implements RoleService {
             }
         });
 
-        if(allPrivileges != null) {
-            role.setPrivileges(allPrivileges);
+        if(!allPrivileges.isEmpty()) {
+            allPrivileges.forEach(privilege -> {
+                role.addPrivilege(privilege);
+            });
         }
         return roleRepository.save(role);
     }

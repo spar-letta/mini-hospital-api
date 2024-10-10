@@ -79,9 +79,7 @@ public class Oauth2Tests extends AuthApplicationTests {
 
     @Test
     public void testAddRoleToUser() {
-        RoleDto roleDto = new RoleDto();
-        roleDto.setName("ROLE_SECRETARY");
-
+        RoleDto roleDto = new RoleDto("ROLE_SECRETARY");
         given()
                 .contentType("application/json")
                 .header("Authorization", "Bearer " + getToken()).log().all()

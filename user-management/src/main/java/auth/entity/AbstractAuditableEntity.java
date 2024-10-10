@@ -33,7 +33,7 @@ public abstract class AbstractAuditableEntity implements Serializable {
     @Column(name = "id", nullable = false, updatable = false)
     private Long id;
 
-    @Column(name = "public_id", updatable = false)
+    @Column(name = "public_id", updatable = false)  //BaseView.privilegeView.class
     @JsonView({BaseView.BaseEntityListView.class, BaseView.ProfileView.class, BaseView.RoleView.class, BaseView.privilegeView.class, BaseView.internalView.class})
     private UUID publicId;
 

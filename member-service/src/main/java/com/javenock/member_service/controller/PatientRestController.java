@@ -21,9 +21,9 @@ import jakarta.validation.Valid;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.format.annotation.DateTimeFormat;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
-import java.io.IOException;
 import java.time.LocalDate;
 import java.util.UUID;
 
@@ -39,6 +39,7 @@ public class PatientRestController {
     }
 
     @PostMapping
+    @PreAuthorize("hasAuthority('CREATE_MEMBER')")
     @Operation(summary = "Create Patient", responses = {
             @ApiResponse(responseCode = "200", description = "OK", content = @Content(mediaType = "application/json", schema = @Schema(example = Examples.PATIENT_RESPONSE)))
     }, requestBody = @io.swagger.v3.oas.annotations.parameters.RequestBody(required = true, content = @Content(examples = {@ExampleObject(name = "Patient creation request", value = Examples.CREATE_PATIENT_REQUEST)})))
@@ -48,6 +49,7 @@ public class PatientRestController {
     }
 
     @GetMapping("/{publicId}")
+    @PreAuthorize("hasAuthority('READ_MEMBER')")
     @Operation(summary = "Get Single Patient", responses = {
             @ApiResponse(responseCode = "200", description = "OK", content = @Content(mediaType = "application/json", schema = @Schema(example = Examples.SINGLE_PATIENT_RESPONSE)))})
     @JsonView(BaseView.MemberView.class)
@@ -56,6 +58,7 @@ public class PatientRestController {
     }
 
     @GetMapping
+    @PreAuthorize("hasAuthority('READ_MEMBER')")
     @Operation(summary = "Get Single Patient", responses = {
             @ApiResponse(responseCode = "200", description = "OK", content = @Content(mediaType = "application/json", schema = @Schema(example = Examples.PATIENTS_RESPONSE)))})
     @JsonView(BaseView.MemberView.class)
@@ -71,6 +74,7 @@ public class PatientRestController {
     }
 
     @PutMapping("/{publicId}")
+    @PreAuthorize("hasAuthority('UPDATE_MEMBER')")
     @Operation(summary = "Update Patient", responses = {
             @ApiResponse(responseCode = "200", description = "OK", content = @Content(mediaType = "application/json", schema = @Schema(example = Examples.UPDATE_PATIENT_RESPONSE)))
     }, requestBody = @io.swagger.v3.oas.annotations.parameters.RequestBody(required = true, content = @Content(examples = {

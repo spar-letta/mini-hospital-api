@@ -15,9 +15,7 @@ public class RoleRestControllerTests extends AuthApplicationTests {
 
     @Test
     public void testCreateRole() {
-        CreateRoleDTO role = new CreateRoleDTO();
-        role.setName("ROLE_ADMIN_TEST");
-        role.setDescription("system administrator");
+        CreateRoleDTO role = new CreateRoleDTO("ROLE_ADMIN_TEST", "system administrator");
 
         String token = getToken();
         given()
@@ -48,8 +46,7 @@ public class RoleRestControllerTests extends AuthApplicationTests {
 
     @Test
     public void testAddPrivilegeToRole() {
-        RolePrivilegeDto rolePrivilegeDto = new RolePrivilegeDto();
-        rolePrivilegeDto.setPrivilegeUUIDs(Arrays.asList(UUID.fromString("db874ce2-dc46-4f11-8915-c1d644f236d1")));
+        RolePrivilegeDto rolePrivilegeDto = new RolePrivilegeDto(Arrays.asList(UUID.fromString("db874ce2-dc46-4f11-8915-c1d644f236d1")));
 
         given()
                 .header("Authorization", "Bearer " + getToken())

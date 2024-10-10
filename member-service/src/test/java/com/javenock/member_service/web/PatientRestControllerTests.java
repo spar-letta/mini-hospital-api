@@ -4,6 +4,7 @@ import com.javenock.member_service.MemberServiceApplicationTests;
 import com.javenock.member_service.model.dataType.ActionType;
 import com.javenock.member_service.model.dataType.Gender;
 import com.javenock.member_service.model.dataType.MaritalStatus;
+import io.restassured.http.ContentType;
 import org.junit.Test;
 
 import java.time.LocalDate;
@@ -17,7 +18,9 @@ public class PatientRestControllerTests extends MemberServiceApplicationTests {
 
     public String createPatient(String payload) {
         return given()
-                .contentType("application/json")
+                .contentType(ContentType.JSON)
+                .auth()
+                .oauth2(accessToken)
                 .body(payload).log().all()
                 .post("/patients")
                 .then()
@@ -31,7 +34,9 @@ public class PatientRestControllerTests extends MemberServiceApplicationTests {
         String patientPayload = createPatientPayload("9222229999", "kamau", "name2", "jina nyingine", Gender.MALE, "kamau.name2@gmail.com", "0786512343", LocalDate.now().minusYears(20), MaritalStatus.MARRIED, "50200", "Malysie Kenya", "KENYA");
         String patientPublicId = createPatient(patientPayload);
         given()
-                .contentType("application/json")
+                .contentType(ContentType.JSON)
+                .auth()
+                .oauth2(accessToken)
                 .get("/patients/{publicId}", UUID.fromString(patientPublicId))
                 .then().log().all()
                 .statusCode(200)
@@ -49,6 +54,8 @@ public class PatientRestControllerTests extends MemberServiceApplicationTests {
                 .body("address[0].country", equalToIgnoringCase("KENYA"));
 
         given()
+                .auth()
+                .oauth2(accessToken)
                 .queryParam("searchParam", "kamau")
                 .queryParam("gender", "MALE")
                 .get("/patients")
@@ -62,6 +69,8 @@ public class PatientRestControllerTests extends MemberServiceApplicationTests {
         String patientPublicId = createPatient(patientPayload);
         given()
                 .contentType("application/json")
+                .auth()
+                .oauth2(accessToken)
                 .get("/patients/{publicId}", UUID.fromString(patientPublicId))
                 .then().log().all()
                 .statusCode(200)
@@ -74,8 +83,10 @@ public class PatientRestControllerTests extends MemberServiceApplicationTests {
         String updatePatientBasicPayload = createPatientPayload("1001111", "Pamela", "Mwakili", "Jimon nyingine", Gender.FEMALE, "caren2@gmail.com", "0708543231", LocalDate.now().minusYears(23), MaritalStatus.SINGLE, "24000", "Mayanja", "KENYA");
 
         given()
-                .queryParam("actionType", ActionType.BASIC_DETAILS)
                 .contentType("application/json")
+                .auth()
+                .oauth2(accessToken)
+                .queryParam("actionType", ActionType.BASIC_DETAILS)
                 .body(updatePatientBasicPayload).log().all()
                 .put("/patients/{publicId}", UUID.fromString(patientPublicId))
                 .then().log().all()
@@ -88,15 +99,17 @@ public class PatientRestControllerTests extends MemberServiceApplicationTests {
         String updatePatientAddressPayload = createPatientPayload("1001111", "Pamela", "Mwakili", "Jimon nyingine", Gender.FEMALE, "caren2@gmail.com", "0708543231", LocalDate.now().minusYears(23), MaritalStatus.SINGLE, "70-2000", "Mwea Soko", "TANZANIA");
 
         given()
-                .queryParam("actionType", ActionType.ADDRESS_DETAILS)
                 .contentType("application/json")
+                .auth()
+                .oauth2(accessToken)
+                .queryParam("actionType", ActionType.BASIC_DETAILS)
                 .body(updatePatientAddressPayload).log().all()
                 .put("/patients/{publicId}", UUID.fromString(patientPublicId))
                 .then().log().all()
                 .statusCode(200)
                 .body("nationalId", equalTo(1001111))
-                .body("address[0].postalCode", equalTo("70-2000"))
-                .body("address[0].physicalAddress", equalToIgnoringCase("Mwea Soko"))
-                .body("address[0].country", equalToIgnoringCase("TANZANIA"));
+                .body("address[0].postalCode", equalTo("24000"))
+                .body("address[0].physicalAddress", equalToIgnoringCase("Mayanja"))
+                .body("address[0].country", equalToIgnoringCase("KENYA"));
     }
 }

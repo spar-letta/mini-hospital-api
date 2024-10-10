@@ -9,7 +9,7 @@ spring:
     name: user-management-service
 
   datasource:
-    url: jdbc:postgresql://localhost:5432/tenten
+    url: jdbc:postgresql://localhost:5432/tenten?createDatabaseIfNotExist=true
     username: postgres
     password: 19pool90
 

@@ -17,26 +17,26 @@ spring:
           uri: lb://doctor-service
           predicates:
             - Path=/departments/** , /doctor-service/v3/api-docs
-#          filters:
-#            - StripPrefix=1
+          filters:
+            - AuthenticationFilter
         - id: member-service
           uri: lb://member-service
           predicates:
             - Path=/patients/** , /member-service/v3/api-docs
-#          filters:
-#            - StripPrefix=1
+          filters:
+            - AuthenticationFilter
         - id: notification-service
           uri: lb://notification-service
           predicates:
             - Path=/auditReport/** , /notification-service/v3/api-docs
-#          filters:
-#            - StripPrefix=1
+          filters:
+            - AuthenticationFilter
         - id: user-management-service
           uri: lb://user-management-service
           predicates:
             - Path=/users/** , /user-management-service/v3/api-docs
-#          filters:
-#            - StripPrefix=1
+          filters:
+            - AuthenticationFilter
 
 springdoc:
   enable-native-support: true

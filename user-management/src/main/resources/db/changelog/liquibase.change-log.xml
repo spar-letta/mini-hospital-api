@@ -121,4 +121,25 @@
                                  referencedTableSchemaName="public"/>
     </changeSet>
 
+    <changeSet author="enock" id="202410091601-14">
+        <preConditions onFail="MARK_RAN">
+            <not>
+                <tableExists schemaName="public" tableName="role_privileges"/>
+            </not>
+        </preConditions>
+        <createTable schemaName="public" tableName="role_privileges">
+            <column name="role_id_fk" type="BIGINT"/>
+            <column name="privilege_id_fk" type="BIGINT"/>
+        </createTable>
+        <addForeignKeyConstraint baseTableSchemaName="public" baseTableName="role_privileges" baseColumnNames="role_id_fk"
+                                 constraintName="role_id_fk_table_role_privileges"
+                                 referencedTableName="roles" referencedColumnNames="id"
+                                 referencedTableSchemaName="public"/>
+        <addForeignKeyConstraint baseTableSchemaName="public" baseTableName="role_privileges"
+                                 baseColumnNames="privilege_id_fk"
+                                 constraintName="privilege_id_fk_table_role_privileges"
+                                 referencedTableName="privileges" referencedColumnNames="id"
+                                 referencedTableSchemaName="public"/>
+    </changeSet>
+
 </databaseChangeLog>

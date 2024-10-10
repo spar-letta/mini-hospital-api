@@ -22,8 +22,8 @@ public class Patient implements Serializable {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "id")
-    @JsonIgnore
+    @Column(name = "patient_id")
+//    @JsonIgnore
     private Long id;
 
     @Column(name = "public_id", updatable = false, insertable = false)

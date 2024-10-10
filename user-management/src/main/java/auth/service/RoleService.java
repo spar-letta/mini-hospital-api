@@ -14,5 +14,5 @@ public interface RoleService {
 
     Page<Role> getAllRoles(Pageable pageable);
 
-    Role assignPrivilegeToRole(UUID rolePublicId, @Valid RolePrivilegeDto request) throws Exception;
+    Role assignPrivilegeToRole(UUID rolePublicId, RolePrivilegeDto request) throws Exception;
 }

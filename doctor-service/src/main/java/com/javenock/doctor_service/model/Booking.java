@@ -62,7 +62,7 @@ public class Booking extends BaseEntity {
     private BookingStatus status;
 
     @ManyToOne
-    @JoinColumn(name = "patient_id", referencedColumnName = "id")
+    @JoinColumn(name = "patient_bookind_id", referencedColumnName = "patient_id")
     @JsonView(BaseView.DoctorView.class)
     private Patient patient;
 

@@ -137,12 +137,12 @@ public class SecurityConfig {
         };
     }
 
-//    @Bean
-//    public AuthorizationServerSettings authorizationServerSettings() {
-//        return AuthorizationServerSettings.builder()
-//                .issuer(applicationUrl)
-//                .build();
-//    }
+    @Bean
+    public AuthorizationServerSettings authorizationServerSettings() {
+        return AuthorizationServerSettings.builder()
+                .issuer(applicationUrl)
+                .build();
+    }
 
     @Bean
     public TokenSettings tokenSettings() {

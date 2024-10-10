@@ -21,6 +21,7 @@ import java.util.stream.Collectors;
 @AllArgsConstructor
 @NoArgsConstructor
 @SQLRestriction(value = "deleted = false")
+@ToString
 public class User extends AbstractAuditableEntity implements UserDetails {
 
     @Id
@@ -74,10 +75,11 @@ public class User extends AbstractAuditableEntity implements UserDetails {
     private boolean changePassword;
 
     @JsonView({BaseView.UserDetailedView.class, BaseView.UserCreatedDetailedView.class, BaseView.UserProfileView.class})
-    @ManyToMany(cascade = CascadeType.MERGE, fetch = FetchType.EAGER)
+    @ManyToMany(cascade = CascadeType.PERSIST, fetch = FetchType.EAGER)
     @JoinTable(name = "user_roles", schema = "public",
             joinColumns = @JoinColumn(name = "user_id_fk", referencedColumnName = "id"),
             inverseJoinColumns = @JoinColumn(name = "role_id_fk", referencedColumnName = "id"))
+    @Setter(AccessLevel.NONE)
     private List<Role> roles = new ArrayList<>();
 
     @Transient
@@ -100,7 +102,7 @@ public class User extends AbstractAuditableEntity implements UserDetails {
     public Collection<GrantedAuthority> getAuthorities() {
         List<GrantedAuthority> listAuthorities = new ArrayList<GrantedAuthority>();
         this.getRoles().forEach(item -> {
-            item.getPrivileges().forEach(privileges -> listAuthorities.add(new SimpleGrantedAuthority(privileges.getName())));
+            item.getPrivilegeList().forEach(privileges -> listAuthorities.add(new SimpleGrantedAuthority(privileges.getName())));
         });
         return listAuthorities;
     }

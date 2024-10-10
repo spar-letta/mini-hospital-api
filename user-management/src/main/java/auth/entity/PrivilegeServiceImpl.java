@@ -2,6 +2,7 @@ package auth.entity;
 
 import auth.dto.request.PrivilegeDto;
 import auth.repository.PrivilegeRepository;
+import auth.repository.RoleRepository;
 import auth.service.PrivilegeService;
 import lombok.AllArgsConstructor;
 import org.slf4j.Logger;
@@ -20,6 +21,7 @@ public class PrivilegeServiceImpl implements PrivilegeService {
 
     private static final Logger log = LoggerFactory.getLogger(PrivilegeServiceImpl.class);
     private final PrivilegeRepository privilegeRepository;
+    private final RoleRepository roleRepository;
 
     @Override
     public Privilege createPrivilege(PrivilegeDto privilegeDto) {

@@ -35,6 +35,11 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public User createUser(CreateUserDTO createUserDTO) {
+        var optionalUser = userRepository.findByUserNameIgnoreCase(createUserDTO.getUserName());
+
+        if (optionalUser.isPresent()) {
+            return optionalUser.get();
+        }
         if (ObjectUtils.isEmpty(createUserDTO.getContactEmail()) && ObjectUtils.isEmpty(createUserDTO.getContactPhonenumber())) {
             throw new ApplicationOperationException("User missing at least one contact info");
         }
@@ -43,11 +48,7 @@ public class UserServiceImpl implements UserService {
             throw new ApplicationOperationException("remove white spaces from username");
         }
 
-        var optionalUser = userRepository.findByUserNameIgnoreCase(createUserDTO.getUserName());
 
-        if (optionalUser.isPresent()) {
-            throw new ApplicationOperationException("User with name: " + createUserDTO.getUserName() + " already exists");
-        }
         String clearPassword = createUserDTO.getPassword();
         var user = User.builder()
                 .userName(createUserDTO.getUserName())

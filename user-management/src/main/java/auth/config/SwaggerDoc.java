@@ -15,27 +15,27 @@ import java.util.List;
 @OpenAPIDefinition
 @Configuration
 public class SwaggerDoc {
-    @Bean
-    public OpenAPI userOpenAPI(
-            @Value("${openapi.service.title}") String serviceTitle,
-            @Value("${openapi.service.version}") String serviceVersion,
-            @Value("${openapi.service.url}") String url) {
-        return new OpenAPI()
-                .servers(List.of(new Server().url(url)))
-                .info(new Info().title(serviceTitle).version(serviceVersion));
-    }
 //    @Bean
-//    public OpenAPI customOpenAPI() {
+//    public OpenAPI userOpenAPI(
+//            @Value("${openapi.service.title}") String serviceTitle,
+//            @Value("${openapi.service.version}") String serviceVersion,
+//            @Value("${openapi.service.url}") String url) {
 //        return new OpenAPI()
-//                .info(new Info()
-//                        .title("Spring Boot 3 API")
-//                        .version("1.0")
-//                        .description("Hospital Management")
-//                        .contact(new Contact()
-//                                .name("javenock")
-//                                .email("simiyuenock1990@gmail.com")
-//                                .url("https://javenock-portifolio.netlify.app")));
+//                .servers(List.of(new Server().url(url)))
+//                .info(new Info().title(serviceTitle).version(serviceVersion));
 //    }
+    @Bean
+    public OpenAPI customOpenAPI() {
+        return new OpenAPI()
+                .info(new Info()
+                        .title("doctor-service doc")
+                        .version("1.0")
+                        .description("Hospital Management")
+                        .contact(new Contact()
+                                .name("javenock")
+                                .email("simiyuenock1990@gmail.com")
+                                .url("https://javenock-portifolio.netlify.app")));
+    }
 //
 //    @Bean
 //    public GroupedOpenApi allApi() {
