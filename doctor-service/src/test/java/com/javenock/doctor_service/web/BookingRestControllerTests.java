@@ -8,6 +8,7 @@ import io.restassured.http.ContentType;
 import org.junit.Test;
 
 import java.io.IOException;
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.UUID;
 
@@ -22,14 +23,14 @@ public class BookingRestControllerTests extends DoctorServiceApplicationTests {
         request.setPatientId(UUID.fromString("78196df3-67de-497d-8165-6d20fac4a76a"));
         request.setDoctorId(UUID.fromString("054e1a02-9cd4-476b-bb4b-22fda2ef02df"));
         request.setVisitType(VisitType.in_patient);
-        request.setVisitDate(LocalDateTime.now().plusDays(6));
+        request.setVisitDate(LocalDate.now().plusDays(6));
         request.setDepartmentId(UUID.fromString("4616953c-cb4e-4536-b3ff-0132aea01995"));
 
         given()
                 .auth()
                 .oauth2(accessToken)
                 .contentType(ContentType.JSON)
-                .body(request)
+                .body(request).log().all()
                 .post("/bookings")
                 .then()
                 .statusCode(200);

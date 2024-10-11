@@ -8,6 +8,8 @@ import org.springframework.security.config.annotation.web.configuration.EnableWe
 import org.springframework.security.oauth2.server.resource.introspection.OpaqueTokenAuthenticationConverter;
 import org.springframework.security.web.SecurityFilterChain;
 
+import static org.springframework.security.web.util.matcher.AntPathRequestMatcher.antMatcher;
+
 @EnableWebSecurity
 @Configuration
 @EnableGlobalMethodSecurity(prePostEnabled = true)
@@ -22,11 +24,13 @@ public class SecurityConfiguration {
                                         .introspectionClientCredentials("browser-client", "secret")
                                         .authenticationConverter(opaqueTokenAuthenticationConverter)));
 
-        http.authorizeHttpRequests(
-                authorizationManagerRequestMatcherRegistry ->
-                        authorizationManagerRequestMatcherRegistry.anyRequest()
-                                .authenticated()
-        );
+         http.authorizeHttpRequests(
+                        authorizationManagerRequestMatcherRegistry ->
+                                authorizationManagerRequestMatcherRegistry
+                                        .requestMatchers(antMatcher("/member-service/v3/**")).permitAll()
+                                        .anyRequest()
+                                        .authenticated()
+                );
 
         return http.build();
     }

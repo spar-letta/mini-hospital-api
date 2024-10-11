@@ -5,13 +5,13 @@ server:
     8080
 
 spring:
-  security:
-    oauth2:
-      resourceserver:
-        opaquetoken:
-          introspection-uri: http://localhost:8081/oauth2/introspect
-          client-id: browser-client
-          client-secret: secret
+#  security:
+#    oauth2:
+#      resourceserver:
+#        opaquetoken:
+#          introspection-uri: http://localhost:8081/oauth2/introspect
+#          client-id: browser-client
+#          client-secret: secret
   application:
     name: gateway-service
   cloud:
@@ -23,12 +23,7 @@ spring:
         - id: doctor-service
           uri: lb://doctor-service
           predicates:
-            - Path=/departments/** , /doctor-service/v3/api-docs
-
-        - id: doctor-service
-          uri: lb://doctor-service
-          predicates:
-            - Path=/bookings/** , /doctor-service/v3/api-docs
+            - Path=/departments/** , /doctor-service/v3/api-docs , /bookings/**
 
         - id: member-service
           uri: lb://member-service

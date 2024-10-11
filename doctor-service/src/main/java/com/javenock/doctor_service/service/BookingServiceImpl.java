@@ -66,7 +66,7 @@ public class BookingServiceImpl implements BookingService {
         User doctor = userRepository.findByPublicIdAndDeletedIsFalse(bookingCreateRequest.getDoctorId()).orElseThrow(() -> new BadRequestException("Sorry, doctor not found."));
         booking.setVisitType(bookingCreateRequest.getVisitType());
         booking.setReason(Arrays.asList(bookingCreateRequest.getReason()));
-        booking.setVisitDate(bookingCreateRequest.getVisitDate());
+        booking.setVisitDate(bookingCreateRequest.getVisitDate().atStartOfDay());
         booking.setDepartment(optionalDepartment);
         booking.setDoctor(Arrays.asList(doctor));
         booking.setStatus(BookingStatus.PENDING);
