@@ -21,4 +21,7 @@ public interface UserServiceClient {
 
     @RequestMapping(method = RequestMethod.GET, value = "/internal/user")
     Optional<User> fetchUserByUsername(@RequestParam("username") String username);
+
+    @RequestMapping(method = RequestMethod.POST, value = "/oauth2/introspect")
+    String fetchTokenRes();
 }

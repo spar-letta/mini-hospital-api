@@ -51,7 +51,7 @@ public class Oauth2Tests extends AuthApplicationTests {
                 .header("Authorization", "Basic " + Base64.getEncoder().encodeToString("browser-client:secret".getBytes(StandardCharsets.UTF_8)))
                 .formParams(introspectPayload)
                 .post("/oauth2/introspect")
-                .then()
+                .then().log().all()
                 .statusCode(200);
     }
 

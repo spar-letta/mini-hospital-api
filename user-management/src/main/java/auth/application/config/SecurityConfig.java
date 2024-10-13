@@ -164,10 +164,11 @@ public class SecurityConfig {
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
         http
                 .securityMatcher("/swagger-ui/**", "/v3/api-docs**", "/api-docs/**", "/api-docs-ui.html",
-                        "/.well-known/**", "/state/health", "/state/info", "/profile/**","/roles/**","/privileges/**")
+                        "/.well-known/**", "/state/health", "/state/info", "/profile/**","/roles/**","/privileges/**","/user-management-service/v3/**")
                 .csrf(AbstractHttpConfigurer::disable)
                 .authorizeHttpRequests(
                         authorizeRequests -> authorizeRequests
+                                .requestMatchers(antMatcher("/user-management-service/v3/**")).permitAll()
                                 .requestMatchers(antMatcher("/swagger-ui/**")).permitAll()
                                 .requestMatchers(antMatcher("/v3/api-docs**")).permitAll()
                                 .requestMatchers(antMatcher("/api-docs/**")).permitAll()

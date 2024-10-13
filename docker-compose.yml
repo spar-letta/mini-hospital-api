@@ -1,0 +1,139 @@
+version: "3.7"
+
+services:
+  discovery-service:
+    image: enockwangila1990/clinic-discovery-service
+    container_name: discovery-server
+#    pull_policy: always
+    ports:
+      - '8761:8761'
+    restart: always
+
+  gateway-service:
+    image: enockwangila1990/clinic-gateway-service
+    container_name: gateway-service
+#    pull_policy: always
+    environment:
+      - eureka.client.service-url.defaultZone=http://discovery-service:8761/eureka
+    ports:
+      - '8080:8080'
+    restart: always
+
+    links:
+      - member-service
+      - doctor-service
+
+  app-user:
+    image: enockwangila1990/clinic-user-management-service
+    build:
+      context: .
+    container_name: user-management-service
+    depends_on:
+      - db
+      - discovery-service
+    environment:
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=19pool90
+      - SPRING_DATASOURCE_URL=jdbc:postgresql://db:5432/tenten
+      - SPRING_DATASOURCE_USERNAME=postgres
+      - SPRING_DATASOURCE_PASSWORD=19pool90
+      - SPRING_JPA_HIBERNATE_DDL_AUTO=update
+      - eureka.client.service-url.defaultZone=http://discovery-service:8761/eureka
+
+    ports:
+      - "8081:8081"
+    restart: always
+
+  member-service:
+    image: enockwangila1990/clinic-member-service
+    build:
+      context: .
+    container_name: member-service
+    depends_on:
+      - db
+      - discovery-service
+      - rabbitmq
+    environment:
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=19pool90
+      - SPRING_DATASOURCE_URL=jdbc:postgresql://db:5432/tenten
+      - SPRING_DATASOURCE_USERNAME=postgres
+      - SPRING_DATASOURCE_PASSWORD=19pool90
+      - SPRING_JPA_HIBERNATE_DDL_AUTO=update
+      - SPRING_RABBITMQ_HOST=rabbitmq
+      - SPRING_RABBITMQ_PORT=5672
+      - SPRING_RABBITMQ_USERNAME=guest
+      - SPRING_RABBITMQ_PASSWORD=guest
+      - eureka.client.service-url.defaultZone=http://discovery-service:8761/eureka
+
+    ports:
+      - '8082:8082'
+    restart: always
+
+  doctor-service:
+    image: enockwangila1990/clinic-doctor-service
+    build:
+      context: .
+    container_name: doctor-service
+    depends_on:
+      - db
+      - discovery-service
+    environment:
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=19pool90
+      - SPRING_DATASOURCE_URL=jdbc:postgresql://db:5432/tenten
+      - SPRING_DATASOURCE_USERNAME=postgres
+      - SPRING_DATASOURCE_PASSWORD=19pool90
+      - SPRING_JPA_HIBERNATE_DDL_AUTO=update
+      - eureka.client.service-url.defaultZone=http://discovery-service:8761/eureka
+
+    ports:
+      - "8585:8085"
+    restart: always
+
+  notification-service:
+    image: enockwangila1990/clinic-notification-service
+    build:
+      context: .
+    container_name: notification-service
+    depends_on:
+      - db
+      - discovery-service
+      - rabbitmq
+    environment:
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=19pool90
+      - SPRING_DATASOURCE_URL=jdbc:postgresql://db:5432/tenten
+      - SPRING_DATASOURCE_USERNAME=postgres
+      - SPRING_DATASOURCE_PASSWORD=19pool90
+      - SPRING_JPA_HIBERNATE_DDL_AUTO=update
+      - SPRING_RABBITMQ_HOST=rabbitmq
+      - SPRING_RABBITMQ_PORT=5672
+      - SPRING_RABBITMQ_USERNAME=guest
+      - SPRING_RABBITMQ_PASSWORD=guest
+      - eureka.client.service-url.defaultZone=http://discovery-service:8761/eureka
+
+    ports:
+      - '8084:8084'
+    restart: always
+
+  db:
+    image: postgres
+    container_name: db
+    environment:
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=19pool90
+      - POSTGRES_DB=tenten
+    ports:
+      - "5433:5432"
+
+  rabbitmq:
+    image: rabbitmq:3-management
+    ports:
+      - "5672:5672"
+      - "15672:15672"
+    volumes:
+      - rabbitmq_data:/var/lib/rabbitmq
+
+volumes:
+  rabbitmq_data:

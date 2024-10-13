@@ -20,13 +20,17 @@ public class SecurityConfiguration {
                 auth -> auth
                         .opaqueToken(
                                 opaqueTokenConfigurer -> opaqueTokenConfigurer
-                                        .introspectionUri("http://localhost:8081/oauth2/introspect")
+                                        .introspectionUri("http://user-management-service:8081/oauth2/introspect")
                                         .introspectionClientCredentials("browser-client", "secret")
                                         .authenticationConverter(opaqueTokenAuthenticationConverter)));
 
          http.authorizeHttpRequests(
                         authorizationManagerRequestMatcherRegistry ->
                                 authorizationManagerRequestMatcherRegistry
+                                        .requestMatchers(antMatcher("/swagger-ui/**")).permitAll()
+                                        .requestMatchers(antMatcher("/v3/api-docs**")).permitAll()
+                                        .requestMatchers(antMatcher("/api-docs/**")).permitAll()
+                                        .requestMatchers(antMatcher("/api-docs-ui.html")).permitAll()
                                         .requestMatchers(antMatcher("/member-service/v3/**")).permitAll()
                                         .anyRequest()
                                         .authenticated()

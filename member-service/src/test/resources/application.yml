@@ -44,7 +44,6 @@ user-management-service:
 #      default:
 #        logger-level: full
 #
-#eureka:
-#  client:
-#    register-with-eureka: true
-#    fetch-registry: true
+eureka:
+  client:
+    enabled: false

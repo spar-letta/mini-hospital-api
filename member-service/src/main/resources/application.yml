@@ -1,8 +1,5 @@
 server:
-  servlet:
-    context-path: /
-  port:
-    8082
+  port: 8082
 
 spring:
   application:
@@ -32,7 +29,7 @@ openapi:
   service:
     title: member-service doc
     version: 1.0.0
-    url: http://localhost:8080
+    url: http://127.0.0.1:8080
 
 springdoc:
   api-docs:
@@ -40,11 +37,18 @@ springdoc:
   swagger-ui:
     path: /member-service/swagger-ui.html
 
+#eureka:
+#  client:
+#    register-with-eureka: true
+#    fetch-registry: true
+#    service-url:
+#      defaultZone: http://localhost:8761/eureka
+#  instance:
+#    hostname: localhost
+
 eureka:
   client:
-    register-with-eureka: true
-    fetch-registry: true
-    service-url:
-      defaultZone: http://localhost:8761/eureka
+    serviceUrl:
+      defaultZone: http://discovery-service:8761/eureka/
   instance:
-    hostname: localhost
+    hostname: member-service

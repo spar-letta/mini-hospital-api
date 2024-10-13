@@ -16,10 +16,10 @@ public class WireMockConfig {
         return new WireMockServer(options().port(1030));
     }
 
-//    @Bean(name="secondMockBooksService", initMethod = "start", destroyMethod = "stop")
-//    public WireMockServer secondMockDoctorService() {
-//        return new WireMockServer(options().port(1031));
-//    }
+    @Bean(name="secondMockBooksService", initMethod = "start", destroyMethod = "stop")
+    public WireMockServer secondMockDoctorService() {
+        return new WireMockServer(options().port(8081));
+    }
 
     @Bean(initMethod = "start", destroyMethod = "stop")
     public WireMockServer mockPatientService() {

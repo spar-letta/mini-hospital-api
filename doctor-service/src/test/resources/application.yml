@@ -41,6 +41,8 @@ spring:
           instances:
             user-management-service[0]:
               uri: http://localhost:1030
+            user-management-service[1]:
+              uri: http://localhost:8081
             member-service[0]:
               uri: http://localhost:1031
 
@@ -52,7 +54,6 @@ spring:
 #      default:
 #        logger-level: full
 #
-#eureka:
-#  client:
-#    register-with-eureka: true
-#    fetch-registry: true
+eureka:
+  client:
+    enabled: false

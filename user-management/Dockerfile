@@ -2,7 +2,8 @@ FROM openjdk:17
 
 EXPOSE 8081
 
-ADD target/user-management-service-0.0.1-SNAPSHOT.jar user-management-service-0.0.1-SNAPSHOT.jar
+ARG JAR_FILE=target/*.jar
 
-ENTRYPOINT ["java","-jar","user-management-service-0.0.1-SNAPSHOT.jar"]
+COPY ${JAR_FILE} app.jar
 
+ENTRYPOINT ["java","-jar","/app.jar"]

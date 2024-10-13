@@ -1,8 +1,5 @@
 server:
-  servlet:
-    context-path: /
-  port:
-    8080
+  port: 8080
 
 spring:
 #  security:
@@ -16,10 +13,14 @@ spring:
     name: gateway-service
   cloud:
     gateway:
+      discovery:
+        locator:
+          enabled: true
       httpclient:
         connect-timeout: 20000
         response-timeout: 7s
       routes:
+
         - id: doctor-service
           uri: lb://doctor-service
           predicates:
@@ -52,21 +53,24 @@ springdoc:
       - url: /v3/api-docs
         name: API Gateway Service
         primaryName: API Gateway Service
+
       - url: /doctor-service/v3/api-docs
         name: Doctor Service
         primaryName: Doctor Service
+
       - url: /member-service/v3/api-docs
         name: Member Service
         primaryName: Member Service
+
       - url: /notification-service/v3/api-docs
         name: Notification Service
         primaryName: Notification Service
+
       - url: /user-management-service/v3/api-docs
         name: User Management Service
         primaryName: User management Service
+
 eureka:
   client:
-    register-with-eureka: true
-    fetch-registry: true
-  instance:
-    hostname: localhost
+    serviceUrl:
+      defaultZone: http://discovery-service:8761/eureka/

@@ -1,0 +1,20 @@
+{
+  "active": true,
+  "sub": "browser-client",
+  "aud": [
+    "browser-client"
+  ],
+  "nbf": 1728654706,
+  "scope": "openid profile",
+  "iss": "http://localhost:8081",
+  "userPublicId": "bb874ce2-dc46-4f11-8915-c1d644f236df",
+  "exp": 1728741106,
+  "iat": 1728654706,
+  "jti": "6de0dd91-ad16-4389-b33f-a22b083cb2c0",
+  "authorities": [
+
+  ],
+  "username": "123456",
+  "client_id": "browser-client",
+  "token_type": "Bearer"
+}

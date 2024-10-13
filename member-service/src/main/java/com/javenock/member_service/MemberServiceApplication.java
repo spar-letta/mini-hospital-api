@@ -15,6 +15,9 @@ import java.io.IOException;
 
 @SpringBootApplication
 @EnableDiscoveryClient
+//@OpenAPIDefinition(info =
+//@Info(title = "Member API", version = "1.0", description = "Documentation Member API v1.0")
+//)
 public class MemberServiceApplication {
 
 	public static void main(String[] args) {

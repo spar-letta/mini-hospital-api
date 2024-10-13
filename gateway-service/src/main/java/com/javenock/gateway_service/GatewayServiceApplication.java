@@ -12,7 +12,6 @@ import org.springframework.http.HttpMethod;
 
 @EnableDiscoveryClient
 @SpringBootApplication
-//@EnableWebFluxSecurity
 @OpenAPIDefinition(info = @Info(title = "API Gateway", version = "1.0", description = "Documentation API Gateway v1.0"))
 public class GatewayServiceApplication {
 

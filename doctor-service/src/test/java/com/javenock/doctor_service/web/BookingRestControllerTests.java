@@ -18,6 +18,7 @@ public class BookingRestControllerTests extends DoctorServiceApplicationTests {
 
     @Test
     public void bookingTest() throws IOException {
+        
         BookingCreateRequest request = new BookingCreateRequest();
         request.setReason("Treatment");
         request.setPatientId(UUID.fromString("78196df3-67de-497d-8165-6d20fac4a76a"));
@@ -25,7 +26,6 @@ public class BookingRestControllerTests extends DoctorServiceApplicationTests {
         request.setVisitType(VisitType.in_patient);
         request.setVisitDate(LocalDate.now().plusDays(6));
         request.setDepartmentId(UUID.fromString("4616953c-cb4e-4536-b3ff-0132aea01995"));
-
         given()
                 .auth()
                 .oauth2(accessToken)

@@ -43,4 +43,14 @@ public class UserManagementServicesMock {
                                 UserManagementServicesMock.class.getClassLoader().getResourceAsStream("payload/fetchUserByUsernameOk.json"),
                                 defaultCharset()))));
     }
+
+    public static void setupMockGetUserByUsernameToken(WireMockServer mockService) throws IOException {
+        mockService.stubFor(WireMock.get(WireMock.urlEqualTo(String.format("/oauth2/introspect")))
+                .willReturn(WireMock.aResponse()
+                        .withStatus(HttpStatus.OK.value())
+                        .withHeader("Content-Type", MediaType.APPLICATION_JSON_VALUE)
+                        .withBody(copyToString(
+                                UserManagementServicesMock.class.getClassLoader().getResourceAsStream("payload/introspectResponse.json"),
+                                defaultCharset()))));
+    }
 }
