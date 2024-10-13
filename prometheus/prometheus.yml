@@ -1,0 +1,32 @@
+global:
+  scrape_interval: 10s
+  evaluation_interval: 10s
+
+scrape_configs:
+  - job_name: 'user-management-service'
+    metrics_path: '/actuator/prometheus'
+    static_configs:
+      - targets: ['user-management-service:8081']
+        labels:
+          application: 'User Management Service App'
+
+  - job_name: 'member-service'
+    metrics_path: '/actuator/prometheus'
+    static_configs:
+      - targets: [ 'member-service:8082' ]
+        labels:
+          application: 'Member Service App'
+
+  - job_name: 'doctor-service'
+    metrics_path: '/actuator/prometheus'
+    static_configs:
+      - targets: [ 'doctor-service:8085' ]
+        labels:
+          application: 'Doctor Service App'
+
+  - job_name: 'notification-service'
+    metrics_path: '/actuator/prometheus'
+    static_configs:
+      - targets: [ 'notification-service:8084' ]
+        labels:
+          application: 'Notification Service App'

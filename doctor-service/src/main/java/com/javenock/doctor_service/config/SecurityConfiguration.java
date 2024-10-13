@@ -28,6 +28,9 @@ public class SecurityConfiguration {
                 authorizationManagerRequestMatcherRegistry ->
                         authorizationManagerRequestMatcherRegistry
                                 .requestMatchers(antMatcher("/doctor-service/v3/**")).permitAll()
+                                .requestMatchers(antMatcher("/state/health")).permitAll()
+                                .requestMatchers(antMatcher("/state/info")).permitAll()
+                                .requestMatchers(antMatcher("/metrics")).permitAll()
                                 .anyRequest()
                                 .authenticated()
         );

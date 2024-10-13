@@ -46,6 +46,11 @@ eureka:
   instance:
     hostname: user-management-service
 
+management:
+  endpoints:
+    web:
+      exposure:
+        include: prometheus
 #eureka:
 #  client:
 #    register-with-eureka: true

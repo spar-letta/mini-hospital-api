@@ -1,6 +1,15 @@
 version: "3.7"
 
 services:
+  zipkin:
+    image: ghcr.io/openzipkin/zipkin-slim:${TAG:-latest}
+    container_name: zipkin
+    environment:
+      - STORAGE_TYPE=mem
+      - MYSQL_HOST=mysql
+    ports:
+      - 9411:9411
+
   discovery-service:
     image: enockwangila1990/clinic-discovery-service
     container_name: discovery-server
@@ -134,6 +143,32 @@ services:
       - "15672:15672"
     volumes:
       - rabbitmq_data:/var/lib/rabbitmq
+
+  prometheus:
+    image: prom/prometheus:v2.37.1
+    container_name: prometheus
+    #restart: always
+    ports:
+      - "9090:9090"
+    volumes:
+      - ./prometheus/prometheus.yml:/etc/prometheus/prometheus.yml
+    depends_on:
+      - app-user
+      - member-service
+      - doctor-service
+      - notification-service
+
+  grafana:
+    image: grafana/grafana-oss:8.5.2
+    container_name: grafana
+    #restart: always
+    ports:
+      - "3000:3000"
+    links:
+      - prometheus:prometheus
+    environment:
+      - GF_SECURITY_ADMIN_USER=admin
+      - GF_SECURITY_ADMIN_PASSWORD=password
 
 volumes:
   rabbitmq_data:

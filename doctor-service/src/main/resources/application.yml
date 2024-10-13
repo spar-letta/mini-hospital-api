@@ -34,6 +34,13 @@ spring:
       initialize-schema: always
     job:
       enabled: 'false'
+
+  zipkin:
+    base-url: http://zipkin:9411/api/v2/spans
+  sleuth:
+    sampler:
+      probability: 1.0
+
 openapi:
   service:
     title: doctor-service doc
@@ -52,6 +59,12 @@ eureka:
       defaultZone: http://discovery-service:8761/eureka/
   instance:
     hostname: doctor-service
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include: prometheus
 
 #eureka:
 #  client:

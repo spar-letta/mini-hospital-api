@@ -52,3 +52,9 @@ eureka:
       defaultZone: http://discovery-service:8761/eureka/
   instance:
     hostname: member-service
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include: prometheus
